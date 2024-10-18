@@ -42,10 +42,10 @@ int main()
 
   // Calcola e stampa la massa invariante tra due particelle
   std::cout << "\nInvariant mass between p1 (Electron) and p2 (Proton): "
-            << p1.InvMass(p2) << " GeV/c^2" << std::endl;
+            << p1.InvariantMass(p2) << " GeV/c^2" << std::endl;
 
   std::cout << "Invariant mass between p3 (Pion) and p4 (Rho Resonance): "
-            << p3.InvMass(p4) << " GeV/c^2" << std::endl;
+            << p3.InvariantMass(p4) << " GeV/c^2" << std::endl;
 
   return 0;
 }
