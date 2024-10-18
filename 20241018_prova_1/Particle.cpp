@@ -14,7 +14,7 @@ int Particle::fNParticleType = 0;
 Particle::Particle(const std::string &name, double px, double py, double pz)
     : fPx(px), fPy(py), fPz(pz)
 {
-  fIndex = FindParticle(name); // Cerca il tipo di particella nell'array
+  fIndex = FindParticleType(name); // Cerca il tipo di particella nell'array
   if (fIndex == -1)
   {
     std::cout << "Particle type " << name << " not found!" << std::endl;
@@ -22,7 +22,7 @@ Particle::Particle(const std::string &name, double px, double py, double pz)
 }
 
 // Metodo privato che cerca il tipo di particella nell'array fParticleType
-int Particle::FindParticle(const std::string &name)
+int Particle::FindParticleType(const std::string &name)
 {
   for (int i = 0; i < fNParticleType; ++i)
   {
@@ -50,7 +50,7 @@ void Particle::AddParticleType(const std::string &name, double mass, int charge,
   }
 
   // Verifica se il tipo di particella esiste già
-  if (FindParticle(name) != -1)
+  if (FindParticleType(name) != -1)
   {
     std::cout << "Particle type " << name << " already exists!" << std::endl;
     return;
@@ -72,7 +72,7 @@ void Particle::AddParticleType(const std::string &name, double mass, int charge,
 // Metodo per impostare l'indice del tipo di particella utilizzando il nome
 void Particle::SetIndex(const std::string &name)
 {
-  fIndex = FindParticle(name);
+  fIndex = FindParticleType(name);
   if (fIndex == -1)
   {
     std::cout << "Particle type " << name << " not found!" << std::endl;
