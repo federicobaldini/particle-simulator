@@ -23,7 +23,7 @@ private:
   double fPx, fPy, fPz;
 
   // Metodo privato per cercare un tipo di particella nell'array fParticleType
-  static int FindParticle(const std::string &name);
+  static int FindParticleType(const std::string &name);
 
 public:
   // Costruttore parametrico con valori di default per l'impulso
