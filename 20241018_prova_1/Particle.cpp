@@ -35,7 +35,7 @@ int Particle::FindParticleType(const std::string &name)
 }
 
 // Getter per l'indice del tipo di particella
-int Particle::GetIndex() const
+int Particle::GetParticleTypeIndex() const
 {
   return fIndex;
 }
@@ -70,7 +70,7 @@ void Particle::AddParticleType(const std::string &name, double mass, int charge,
 }
 
 // Metodo per impostare l'indice del tipo di particella utilizzando il nome
-void Particle::SetIndex(const std::string &name)
+void Particle::SetParticleTypeIndex(const std::string &name)
 {
   fIndex = FindParticleType(name);
   if (fIndex == -1)
@@ -80,7 +80,7 @@ void Particle::SetIndex(const std::string &name)
 }
 
 // Metodo per impostare l'indice del tipo di particella utilizzando direttamente l'indice
-void Particle::SetIndex(int index)
+void Particle::SetParticleTypeIndex(int index)
 {
   if (index >= 0 && index < fNParticleType)
   {
@@ -103,7 +103,7 @@ void Particle::Print() const
 }
 
 // Metodo per settare le componenti dell'impulso
-void Particle::SetP(double px, double py, double pz)
+void Particle::SetPulse(double px, double py, double pz)
 {
   fPx = px;
   fPy = py;
@@ -129,13 +129,13 @@ double Particle::GetEnergy() const
 }
 
 // Metodo che calcola la massa invariante tra questa particella e un'altra particella
-double Particle::InvMass(const Particle &other) const
+double Particle::InvariantMass(const Particle &other) const
 {
   double e1 = GetEnergy();
   double e2 = other.GetEnergy();
-  double px_total = fPx + other.GetPx();
-  double py_total = fPy + other.GetPy();
-  double pz_total = fPz + other.GetPz();
+  double px_total = fPx + other.GetPulseX();
+  double py_total = fPy + other.GetPulseY();
+  double pz_total = fPz + other.GetPulseZ();
   double p2_total = px_total * px_total + py_total * py_total + pz_total * pz_total;
   double mass_inv = std::sqrt((e1 + e2) * (e1 + e2) - p2_total); // Formula per la massa invariante
   return mass_inv;
