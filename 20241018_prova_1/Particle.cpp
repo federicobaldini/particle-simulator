@@ -3,6 +3,7 @@
 #include "ParticleType.h"
 #include <iostream>
 #include <cmath>
+#include <cstdlib> // Per RAND_MAX e rand()
 
 // Inizializzazione dell'array statico di puntatori a ParticleType
 ParticleType *Particle::fParticleType[Particle::fMaxNumParticleType] = {nullptr};
@@ -139,4 +140,79 @@ double Particle::InvariantMass(const Particle &other) const
   double p2_total = px_total * px_total + py_total * py_total + pz_total * pz_total;
   double mass_inv = std::sqrt((e1 + e2) * (e1 + e2) - p2_total); // Formula per la massa invariante
   return mass_inv;
+}
+
+// Metodo Decay2body per la decadenza in due particelle figlie
+int Particle::Decay2body(Particle &dau1, Particle &dau2) const
+{
+  if (GetMass() == 0.0)
+  {
+    std::cerr << "Decayment cannot be performed if mass is zero\n";
+    return 1;
+  }
+
+  double massMot = GetMass();
+  double massDau1 = dau1.GetMass();
+  double massDau2 = dau2.GetMass();
+
+  // Effetto larghezza
+  if (fIndex > -1)
+  {
+    float x1, x2, w, y1;
+    double invnum = 1. / RAND_MAX;
+    do
+    {
+      x1 = 2.0 * rand() * invnum - 1.0;
+      x2 = 2.0 * rand() * invnum - 1.0;
+      w = x1 * x1 + x2 * x2;
+    } while (w >= 1.0);
+
+    w = sqrt((-2.0 * log(w)) / w);
+    y1 = x1 * w;
+
+    massMot += fParticleType[fIndex]->GetWidth() * y1;
+  }
+
+  if (massMot < massDau1 + massDau2)
+  {
+    std::cerr << "Decayment cannot be performed because mass is too low in this channel\n";
+    return 2;
+  }
+
+  double pout = sqrt((massMot * massMot - (massDau1 + massDau2) * (massDau1 + massDau2)) *
+                     (massMot * massMot - (massDau1 - massDau2) * (massDau1 - massDau2))) /
+                (massMot * 0.5);
+
+  double norm = 2 * M_PI / RAND_MAX;
+  double phi = rand() * norm;
+  double theta = rand() * norm * 0.5 - M_PI / 2.;
+
+  // Imposta il momento delle particelle figlie
+  dau1.SetPulse(pout * sin(theta) * cos(phi), pout * sin(theta) * sin(phi), pout * cos(theta));
+  dau2.SetPulse(-pout * sin(theta) * cos(phi), -pout * sin(theta) * sin(phi), -pout * cos(theta));
+
+  double energy = sqrt(fPx * fPx + fPy * fPy + fPz * fPz + massMot * massMot);
+  double bx = fPx / energy;
+  double by = fPy / energy;
+  double bz = fPz / energy;
+
+  // Applica il boost alle particelle figlie
+  dau1.Boost(bx, by, bz);
+  dau2.Boost(bx, by, bz);
+
+  return 0;
+}
+
+// Metodo Boost
+void Particle::Boost(double bx, double by, double bz)
+{
+  double energy = GetEnergy();
+  double b2 = bx * bx + by * by + bz * bz;
+  double gamma = 1.0 / sqrt(1.0 - b2);
+  double bp = bx * fPx + by * fPy + bz * fPz;
+  double gamma2 = (b2 > 0) ? (gamma - 1.0) / b2 : 0.0;
+
+  fPx += gamma2 * bp * bx + gamma * bx * energy;
+  fPy += gamma2 * bp * by + gamma * by * energy;
+  fPz += gamma2 * bp * bz + gamma * bz * energy;
 }
