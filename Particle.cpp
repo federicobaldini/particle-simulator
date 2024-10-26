@@ -11,6 +11,11 @@ ParticleType *Particle::fParticleType[Particle::fMaxNumParticleType] = {nullptr}
 // Inizializzazione del contatore statico per il numero di tipi di particelle
 int Particle::fNParticleType = 0;
 
+Particle::Particle()
+    : fPx(0), fPy(0), fPz(0), fIndex(-1) // Impulsi e indice di tipo di particella impostati a 0 e -1 rispettivamente
+{
+}
+
 // Costruttore parametrico che inizializza il tipo di particella e le componenti dell'impulso
 Particle::Particle(const std::string &name, double px, double py, double pz)
     : fPx(px), fPy(py), fPz(pz)
@@ -142,8 +147,8 @@ double Particle::InvariantMass(const Particle &other) const
   return mass_inv;
 }
 
-// Metodo Decay2body per la decadenza in due particelle figlie
-int Particle::Decay2body(Particle &dau1, Particle &dau2) const
+// Metodo Decay2Body per la decadenza in due particelle figlie
+int Particle::Decay2Body(Particle &dau1, Particle &dau2) const
 {
   if (GetMass() == 0.0)
   {
