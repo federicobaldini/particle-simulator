@@ -2,73 +2,137 @@
 #include "ResonanceType.h"
 #include "Particle.h"
 #include <iostream>
+#include <vector>
+#include <cmath>
+#include "TH1F.h"
+#include "TFile.h"
+#include "TRandom.h"
+#include "TCanvas.h"
 
 int main()
 {
-  // Test const su ParticleType
-  const ParticleType electronType("Electron", 0.000511, -1);
-  std::cout << "Testing ParticleType (Electron):\n";
-  std::cout << "Name: " << electronType.GetName() << "\n";
-  std::cout << "Mass: " << electronType.GetMass() << "\n";
-  std::cout << "Charge: " << electronType.GetCharge() << "\n";
-  electronType.Print();
+  // Punto 0: Inizializzazione del seed e aggiunta dei tipi di particelle
+  gRandom->SetSeed(12345);
+  Particle::AddParticleType("Pion+", 0.13957, 1);
+  Particle::AddParticleType("Pion-", 0.13957, -1);
+  Particle::AddParticleType("Kaon+", 0.49367, 1);
+  Particle::AddParticleType("Kaon-", 0.49367, -1);
+  Particle::AddParticleType("Proton+", 0.93827, 1);
+  Particle::AddParticleType("Proton-", 0.93827, -1);
+  Particle::AddParticleType("K*", 0.89166, 0, 0.050); // Risonanza K*
 
-  // Test const su ResonanceType
-  const ResonanceType rhoType("Rho", 0.770, 0, 0.150);
-  std::cout << "\nTesting ResonanceType (Rho Resonance):\n";
-  std::cout << "Name: " << rhoType.GetName() << "\n";
-  std::cout << "Mass: " << rhoType.GetMass() << "\n";
-  std::cout << "Charge: " << rhoType.GetCharge() << "\n";
-  std::cout << "Width: " << rhoType.GetWidth() << "\n";
-  rhoType.Print();
+  // Definizione degli istogrammi
+  TH1F *hParticleTypes = new TH1F("hParticleTypes", "Particle Types", 7, 0, 7);
+  TH1F *hAzimuthalAngle = new TH1F("hAzimuthalAngle", "Azimuthal Angle Distribution", 100, 0, 2 * M_PI);
+  TH1F *hPolarAngle = new TH1F("hPolarAngle", "Polar Angle Distribution", 100, 0, M_PI);
+  TH1F *hMomentum = new TH1F("hMomentum", "Momentum Distribution", 100, 0, 5);
+  TH1F *hTransverseMomentum = new TH1F("hTransverseMomentum", "Transverse Momentum Distribution", 100, 0, 5);
+  TH1F *hEnergy = new TH1F("hEnergy", "Energy Distribution", 100, 0, 5);
+  TH1F *hInvariantMass = new TH1F("hInvariantMass", "Invariant Mass Distribution", 100, 0, 3);
 
-  // --- Test della classe Particle ---
+  // Abilitare la valutazione delle incertezze
+  hInvariantMass->Sumw2();
 
-  // Aggiungi nuovi tipi di particelle al sistema
-  Particle::AddParticleType("Electron", 0.000511, -1); // Massa in GeV/c^2
-  Particle::AddParticleType("Proton", 0.938, 1);       // Massa in GeV/c^2
-  Particle::AddParticleType("Pion", 0.139, 1);         // Massa in GeV/c^2
-  Particle::AddParticleType("Rho", 0.770, 0, 0.150);   // Risonanza, con larghezza
+  // Evento con array di particelle: dimensione scelta in base alla probabilità di decadimento K*
+  Particle EventParticles[120];
+  std::vector<Particle> finalParticles;
 
-  // Verifica del metodo AddParticleType e prevenzione di duplicati
-  std::cout << "\nAttempting to add duplicate ParticleType (Electron):\n";
-  Particle::AddParticleType("Electron", 0.000511, -1); // Questo dovrebbe stampare un messaggio di avviso
+  // Ciclo principale su 100.000 eventi
+  for (int event = 0; event < 100000; ++event)
+  {
+    finalParticles.clear(); // Svuotare il vettore per ogni nuovo evento
 
-  // Creazione di particelle e impostazione degli impulsi
-  Particle p1("Electron", 1.0, 0.0, 0.0); // Particella con impulso (1, 0, 0)
-  Particle p2("Proton", 0.0, 1.0, 0.0);   // Particella con impulso (0, 1, 0)
-  Particle p3("Pion", 0.0, 0.0, 1.0);     // Particella con impulso (0, 0, 1)
-  Particle p4("Rho", 0.5, 0.5, 0.5);      // Risonanza con impulso (0.5, 0.5, 0.5)
+    for (int i = 0; i < 100; ++i)
+    {
+      double phi = gRandom->Uniform(0, 2 * M_PI);
+      double theta = gRandom->Uniform(0, M_PI);
+      double momentum = gRandom->Exp(1);
 
-  // Stampa le proprietà di ciascuna particella
-  std::cout << "\nProperties of p1 (Electron):" << std::endl;
-  p1.Print();
-  std::cout << std::endl;
+      double px = momentum * sin(theta) * cos(phi);
+      double py = momentum * sin(theta) * sin(phi);
+      double pz = momentum * cos(theta);
 
-  std::cout << "Properties of p2 (Proton):" << std::endl;
-  p2.Print();
-  std::cout << std::endl;
+      // Generazione casuale del tipo di particella con le proporzioni richieste
+      double randType = gRandom->Rndm();
+      if (randType < 0.4)
+      {
+        EventParticles[i].SetParticleTypeIndex("Pion+");
+      }
+      else if (randType < 0.8)
+      {
+        EventParticles[i].SetParticleTypeIndex("Pion-");
+      }
+      else if (randType < 0.9)
+      {
+        EventParticles[i].SetParticleTypeIndex("Kaon+");
+      }
+      else if (randType < 0.91)
+      {
+        EventParticles[i].SetParticleTypeIndex("Kaon-");
+      }
+      else if (randType < 0.955)
+      {
+        EventParticles[i].SetParticleTypeIndex("Proton+");
+      }
+      else if (randType < 0.965)
+      {
+        EventParticles[i].SetParticleTypeIndex("Proton-");
+      }
+      else
+      {
+        EventParticles[i].SetParticleTypeIndex("K*");
+        Particle pion("Pion+");
+        Particle kaon("Kaon-");
 
-  std::cout << "Properties of p3 (Pion):" << std::endl;
-  p3.Print();
-  std::cout << std::endl;
+        if (gRandom->Rndm() < 0.5)
+        {
+          pion.SetParticleTypeIndex("Pion-");
+          kaon.SetParticleTypeIndex("Kaon+");
+        }
 
-  std::cout << "Properties of p4 (Rho Resonance):" << std::endl;
-  p4.Print();
-  std::cout << std::endl;
+        if (EventParticles[i].Decay2Body(pion, kaon) == 0)
+        {
+          finalParticles.push_back(pion);
+          finalParticles.push_back(kaon);
+        }
+      }
 
-  // Calcola e stampa l'energia totale di ciascuna particella
-  std::cout << "Energy of p1 (Electron): " << p1.GetEnergy() << " GeV" << std::endl;
-  std::cout << "Energy of p2 (Proton): " << p2.GetEnergy() << " GeV" << std::endl;
-  std::cout << "Energy of p3 (Pion): " << p3.GetEnergy() << " GeV" << std::endl;
-  std::cout << "Energy of p4 (Rho Resonance): " << p4.GetEnergy() << " GeV" << std::endl;
+      // Impostare l'impulso della particella
+      EventParticles[i].SetPulse(px, py, pz);
+      finalParticles.push_back(EventParticles[i]);
 
-  // Calcola e stampa la massa invariante tra due particelle
-  std::cout << "\nInvariant mass between p1 (Electron) and p2 (Proton): "
-            << p1.InvariantMass(p2) << " GeV/c^2" << std::endl;
+      // Riempire gli istogrammi per il tipo, angoli, impulso, ecc.
+      hParticleTypes->Fill(EventParticles[i].GetParticleTypeIndex());
+      hAzimuthalAngle->Fill(phi);
+      hPolarAngle->Fill(theta);
+      hMomentum->Fill(momentum);
+      hTransverseMomentum->Fill(sqrt(px * px + py * py));
+      hEnergy->Fill(EventParticles[i].GetEnergy());
+    }
 
-  std::cout << "Invariant mass between p3 (Pion) and p4 (Rho Resonance): "
-            << p3.InvariantMass(p4) << " GeV/c^2" << std::endl;
+    // Calcolo della massa invariante tra tutte le particelle finali
+    for (size_t i = 0; i < finalParticles.size(); ++i)
+    {
+      for (size_t j = i + 1; j < finalParticles.size(); ++j)
+      {
+        double invMass = finalParticles[i].InvariantMass(finalParticles[j]);
+        hInvariantMass->Fill(invMass);
+      }
+    }
+  }
+
+  // Salvataggio degli istogrammi in un file ROOT
+  TFile file("ParticleAnalysis.root", "RECREATE");
+  hParticleTypes->Write();
+  hAzimuthalAngle->Write();
+  hPolarAngle->Write();
+  hMomentum->Write();
+  hTransverseMomentum->Write();
+  hEnergy->Write();
+  hInvariantMass->Write();
+  file.Close();
+
+  std::cout << "Istogrammi salvati in ParticleAnalysis.root" << std::endl;
 
   return 0;
 }

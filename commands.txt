@@ -1,2 +1,5 @@
 [20241018_prova_1]
 g++ -std=c++11 -o particle_sim ParticleType.cpp ResonanceType.cpp Particle.cpp main.cpp
+
+[20241025_prova_2]
+g++ -std=c++11 -o particle_sim ParticleType.cpp ResonanceType.cpp Particle.cpp main.cpp $(root-config --cflags --libs)

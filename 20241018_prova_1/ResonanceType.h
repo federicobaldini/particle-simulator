@@ -13,7 +13,7 @@ public:
   ResonanceType(const std::string &name, double mass, int charge, double width);
 
   // Getter per la larghezza della risonanza (dichiarazione, non definizione)
-  double GetWidth() const;
+  double GetWidth() const override;
 
   // Metodo per stampare le proprietà della particella (dichiarazione, non definizione)
   void Print() const override;

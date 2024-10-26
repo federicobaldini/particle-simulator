@@ -36,7 +36,6 @@ public:
   void SetPulse(double px, double py, double pz);
   double GetMass() const;
   double GetEnergy() const;
-
   double InvariantMass(const Particle &other) const;
 
   // Nuovo metodo pubblico per la decadenza a due corpi

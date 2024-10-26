@@ -20,6 +20,9 @@ public:
   double GetMass() const;
   int GetCharge() const;
 
+  // Metodo virtuale per la larghezza, ritorna 0 per le particelle stabili
+  virtual double GetWidth() const { return 0.0; }
+
   // Metodo per stampare le proprietà della particella (dichiarazione, non definizione)
   virtual void Print() const;
 };
