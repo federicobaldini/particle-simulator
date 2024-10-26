@@ -155,22 +155,26 @@ int Particle::Decay2body(Particle &dau1, Particle &dau2) const
   double massDau1 = dau1.GetMass();
   double massDau2 = dau2.GetMass();
 
-  // Effetto larghezza
+  // Effetto larghezza: verifica se il tipo di particella è una ResonanceType
   if (fIndex > -1)
   {
-    float x1, x2, w, y1;
-    double invnum = 1. / RAND_MAX;
-    do
-    {
-      x1 = 2.0 * rand() * invnum - 1.0;
-      x2 = 2.0 * rand() * invnum - 1.0;
-      w = x1 * x1 + x2 * x2;
-    } while (w >= 1.0);
+    ResonanceType *resonance = dynamic_cast<ResonanceType *>(fParticleType[fIndex]);
+    if (resonance)
+    { // Se il cast è riuscito, l'oggetto è una ResonanceType
+      float x1, x2, w, y1;
+      double invnum = 1. / RAND_MAX;
+      do
+      {
+        x1 = 2.0 * rand() * invnum - 1.0;
+        x2 = 2.0 * rand() * invnum - 1.0;
+        w = x1 * x1 + x2 * x2;
+      } while (w >= 1.0);
 
-    w = sqrt((-2.0 * log(w)) / w);
-    y1 = x1 * w;
+      w = sqrt((-2.0 * log(w)) / w);
+      y1 = x1 * w;
 
-    massMot += fParticleType[fIndex]->GetWidth() * y1;
+      massMot += resonance->GetWidth() * y1; // Accede a GetWidth solo se è ResonanceType
+    }
   }
 
   if (massMot < massDau1 + massDau2)
