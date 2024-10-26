@@ -5,11 +5,34 @@
 
 int main()
 {
+  // Test const su ParticleType
+  const ParticleType electronType("Electron", 0.000511, -1);
+  std::cout << "Testing ParticleType (Electron):\n";
+  std::cout << "Name: " << electronType.GetName() << "\n";
+  std::cout << "Mass: " << electronType.GetMass() << "\n";
+  std::cout << "Charge: " << electronType.GetCharge() << "\n";
+  electronType.Print();
+
+  // Test const su ResonanceType
+  const ResonanceType rhoType("Rho", 0.770, 0, 0.150);
+  std::cout << "\nTesting ResonanceType (Rho Resonance):\n";
+  std::cout << "Name: " << rhoType.GetName() << "\n";
+  std::cout << "Mass: " << rhoType.GetMass() << "\n";
+  std::cout << "Charge: " << rhoType.GetCharge() << "\n";
+  std::cout << "Width: " << rhoType.GetWidth() << "\n";
+  rhoType.Print();
+
+  // --- Test della classe Particle ---
+
   // Aggiungi nuovi tipi di particelle al sistema
   Particle::AddParticleType("Electron", 0.000511, -1); // Massa in GeV/c^2
   Particle::AddParticleType("Proton", 0.938, 1);       // Massa in GeV/c^2
   Particle::AddParticleType("Pion", 0.139, 1);         // Massa in GeV/c^2
   Particle::AddParticleType("Rho", 0.770, 0, 0.150);   // Risonanza, con larghezza
+
+  // Verifica del metodo AddParticleType e prevenzione di duplicati
+  std::cout << "\nAttempting to add duplicate ParticleType (Electron):\n";
+  Particle::AddParticleType("Electron", 0.000511, -1); // Questo dovrebbe stampare un messaggio di avviso
 
   // Creazione di particelle e impostazione degli impulsi
   Particle p1("Electron", 1.0, 0.0, 0.0); // Particella con impulso (1, 0, 0)
@@ -18,7 +41,7 @@ int main()
   Particle p4("Rho", 0.5, 0.5, 0.5);      // Risonanza con impulso (0.5, 0.5, 0.5)
 
   // Stampa le proprietà di ciascuna particella
-  std::cout << "Properties of p1 (Electron):" << std::endl;
+  std::cout << "\nProperties of p1 (Electron):" << std::endl;
   p1.Print();
   std::cout << std::endl;
 
