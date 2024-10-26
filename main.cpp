@@ -11,7 +11,7 @@
 
 int main()
 {
-  // Punto 0: Inizializzazione del seed e aggiunta dei tipi di particelle
+  // Initialize random seed and particle types with properties
   gRandom->SetSeed(12345);
   Particle::AddParticleType("Pion+", 0.13957, 1);
   Particle::AddParticleType("Pion-", 0.13957, -1);
@@ -19,9 +19,9 @@ int main()
   Particle::AddParticleType("Kaon-", 0.49367, -1);
   Particle::AddParticleType("Proton+", 0.93827, 1);
   Particle::AddParticleType("Proton-", 0.93827, -1);
-  Particle::AddParticleType("K*", 0.89166, 0, 0.050); // Risonanza K*
+  Particle::AddParticleType("K*", 0.89166, 0, 0.050);
 
-  // Definizione degli istogrammi
+  // Define histograms for particle properties and invariant mass
   TH1F *hParticleTypes = new TH1F("hParticleTypes", "Particle Types", 7, 0, 7);
   TH1F *hAzimuthalAngle = new TH1F("hAzimuthalAngle", "Azimuthal Angle Distribution", 100, 0, 2 * M_PI);
   TH1F *hPolarAngle = new TH1F("hPolarAngle", "Polar Angle Distribution", 100, 0, M_PI);
@@ -30,66 +30,58 @@ int main()
   TH1F *hEnergy = new TH1F("hEnergy", "Energy Distribution", 100, 0, 5);
   TH1F *hInvariantMass = new TH1F("hInvariantMass", "Invariant Mass Distribution", 100, 0, 3);
 
-  // Abilitare la valutazione delle incertezze
+  // Enable error calculation for invariant mass histogram
   hInvariantMass->Sumw2();
 
-  // Evento con array di particelle: dimensione scelta in base alla probabilità di decadimento K*
+  // Define an array of particles per event, with extra capacity for decayed particles
   Particle EventParticles[120];
   std::vector<Particle> finalParticles;
 
-  // Ciclo principale su 100.000 eventi
+  // Generate 100,000 events with 100 particles each
   for (int event = 0; event < 100000; ++event)
   {
-    finalParticles.clear(); // Svuotare il vettore per ogni nuovo evento
+    finalParticles.clear();
 
     for (int i = 0; i < 100; ++i)
     {
+      // Generate azimuthal angle, polar angle, and momentum
       double phi = gRandom->Uniform(0, 2 * M_PI);
       double theta = gRandom->Uniform(0, M_PI);
       double momentum = gRandom->Exp(1);
 
+      // Convert to Cartesian coordinates
       double px = momentum * sin(theta) * cos(phi);
       double py = momentum * sin(theta) * sin(phi);
       double pz = momentum * cos(theta);
 
-      // Generazione casuale del tipo di particella con le proporzioni richieste
+      // Assign particle type based on random distribution
       double randType = gRandom->Rndm();
       if (randType < 0.4)
-      {
         EventParticles[i].SetParticleTypeIndex("Pion+");
-      }
       else if (randType < 0.8)
-      {
         EventParticles[i].SetParticleTypeIndex("Pion-");
-      }
       else if (randType < 0.9)
-      {
         EventParticles[i].SetParticleTypeIndex("Kaon+");
-      }
       else if (randType < 0.91)
-      {
         EventParticles[i].SetParticleTypeIndex("Kaon-");
-      }
       else if (randType < 0.955)
-      {
         EventParticles[i].SetParticleTypeIndex("Proton+");
-      }
       else if (randType < 0.965)
-      {
         EventParticles[i].SetParticleTypeIndex("Proton-");
-      }
       else
       {
         EventParticles[i].SetParticleTypeIndex("K*");
         Particle pion("Pion+");
         Particle kaon("Kaon-");
 
+        // Randomly assign pion and kaon charge for decay products
         if (gRandom->Rndm() < 0.5)
         {
           pion.SetParticleTypeIndex("Pion-");
           kaon.SetParticleTypeIndex("Kaon+");
         }
 
+        // Perform decay and store decay products
         if (EventParticles[i].Decay2Body(pion, kaon) == 0)
         {
           finalParticles.push_back(pion);
@@ -97,11 +89,11 @@ int main()
         }
       }
 
-      // Impostare l'impulso della particella
+      // Set particle momentum
       EventParticles[i].SetPulse(px, py, pz);
       finalParticles.push_back(EventParticles[i]);
 
-      // Riempire gli istogrammi per il tipo, angoli, impulso, ecc.
+      // Fill histograms for particle properties
       hParticleTypes->Fill(EventParticles[i].GetParticleTypeIndex());
       hAzimuthalAngle->Fill(phi);
       hPolarAngle->Fill(theta);
@@ -110,7 +102,7 @@ int main()
       hEnergy->Fill(EventParticles[i].GetEnergy());
     }
 
-    // Calcolo della massa invariante tra tutte le particelle finali
+    // Calculate invariant mass between pairs of final particles
     for (size_t i = 0; i < finalParticles.size(); ++i)
     {
       for (size_t j = i + 1; j < finalParticles.size(); ++j)
@@ -121,7 +113,7 @@ int main()
     }
   }
 
-  // Salvataggio degli istogrammi in un file ROOT
+  // Save histograms to ROOT file for analysis
   TFile file("ParticleAnalysis.root", "RECREATE");
   hParticleTypes->Write();
   hAzimuthalAngle->Write();
@@ -132,7 +124,7 @@ int main()
   hInvariantMass->Write();
   file.Close();
 
-  std::cout << "Istogrammi salvati in ParticleAnalysis.root" << std::endl;
+  std::cout << "Histograms saved to ParticleAnalysis.root" << std::endl;
 
   return 0;
 }

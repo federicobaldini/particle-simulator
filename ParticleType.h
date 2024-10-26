@@ -7,23 +7,23 @@
 class ParticleType
 {
 private:
-  const std::string fName; // Nome della particella
-  const double fMass;      // Massa della particella
-  const int fCharge;       // Carica della particella
+  const std::string fName; // Particle name
+  const double fMass;      // Particle mass
+  const int fCharge;       // Particle charge
 
 public:
-  // Costruttore parametrico (dichiarazione, non definizione)
+  // Parameterized constructor
   ParticleType(const std::string &name, double mass, int charge);
 
-  // Getters (dichiarazione, non definizione)
+  // Accessors for particle properties
   const std::string &GetName() const;
   double GetMass() const;
   int GetCharge() const;
 
-  // Metodo virtuale per la larghezza, ritorna 0 per le particelle stabili
+  // Virtual method for particle width, returns 0 for stable particles
   virtual double GetWidth() const { return 0.0; }
 
-  // Metodo per stampare le proprietà della particella (dichiarazione, non definizione)
+  // Prints particle properties
   virtual void Print() const;
 };
 

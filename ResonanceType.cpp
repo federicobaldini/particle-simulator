@@ -1,19 +1,19 @@
 #include "ResonanceType.h"
 #include <iostream>
 
-// Definizione del costruttore
+// Constructor initializing base properties and resonance width
 ResonanceType::ResonanceType(const std::string &name, double mass, int charge, double width)
     : ParticleType(name, mass, charge), fWidth(width) {}
 
-// Definizione del getter per la larghezza della risonanza
+// Returns resonance width
 double ResonanceType::GetWidth() const
 {
   return fWidth;
 }
 
-// Definizione del metodo Print
+// Prints particle properties, including resonance width
 void ResonanceType::Print() const
 {
-  ParticleType::Print(); // Chiamata al metodo della classe base
+  ParticleType::Print(); // Call to base class method
   std::cout << "Width: " << fWidth << std::endl;
 }

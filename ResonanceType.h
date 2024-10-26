@@ -6,16 +6,16 @@
 class ResonanceType : public ParticleType
 {
 private:
-  const double fWidth; // Larghezza della risonanza
+  const double fWidth; // Resonance width
 
 public:
-  // Costruttore parametrico (dichiarazione, non definizione)
+  // Constructor initializing name, mass, charge, and width
   ResonanceType(const std::string &name, double mass, int charge, double width);
 
-  // Getter per la larghezza della risonanza (dichiarazione, non definizione)
+  // Returns the resonance width
   double GetWidth() const override;
 
-  // Metodo per stampare le proprietà della particella (dichiarazione, non definizione)
+  // Prints particle properties, including width
   void Print() const override;
 };
 

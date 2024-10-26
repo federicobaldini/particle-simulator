@@ -1,29 +1,29 @@
 #include "ParticleType.h"
 #include <iostream>
 
-// Definizione del costruttore
+// Constructor initializes particle name, mass, and charge
 ParticleType::ParticleType(const std::string &name, double mass, int charge)
     : fName(name), fMass(mass), fCharge(charge) {}
 
-// Definizione del getter per il nome
+// Returns particle name
 const std::string &ParticleType::GetName() const
 {
   return fName;
 }
 
-// Definizione del getter per la massa
+// Returns particle mass
 double ParticleType::GetMass() const
 {
   return fMass;
 }
 
-// Definizione del getter per la carica
+// Returns particle charge
 int ParticleType::GetCharge() const
 {
   return fCharge;
 }
 
-// Definizione del metodo Print
+// Prints particle properties to standard output
 void ParticleType::Print() const
 {
   std::cout << "Particle Name: " << fName
