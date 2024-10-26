@@ -20,6 +20,7 @@ private:
   void Boost(double bx, double by, double bz);
 
 public:
+  Particle();
   Particle(const std::string &name, double px = 0, double py = 0, double pz = 0);
 
   int GetParticleTypeIndex() const;
@@ -39,7 +40,7 @@ public:
   double InvariantMass(const Particle &other) const;
 
   // Nuovo metodo pubblico per la decadenza a due corpi
-  int Decay2body(Particle &dau1, Particle &dau2) const;
+  int Decay2Body(Particle &dau1, Particle &dau2) const;
 };
 
 #endif // PARTICLE_H
