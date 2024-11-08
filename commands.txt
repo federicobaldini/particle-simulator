@@ -1,5 +1,13 @@
 [20241018_prova_1]
 g++ -std=c++11 -o particle_sim ParticleType.cpp ResonanceType.cpp Particle.cpp main.cpp
 
-[20241025_prova_2]
+[20241108_prova_2]
 g++ -std=c++11 -o particle_sim ParticleType.cpp ResonanceType.cpp Particle.cpp main.cpp $(root-config --cflags --libs)
+
+[ROOT]
+root
+TFile *file = TFile::Open("ParticleAnalysis.root");
+hInvariantMass->Draw();
+
+// salva tutti i grafici in ParticleAnalysis.root come singoli pdf
+root -l -b -q save_histograms.cpp
