@@ -41,6 +41,18 @@ int Particle::GetParticleTypeIndex() const
   return fIndex;
 }
 
+const ParticleType *Particle::GetParticleType(int index)
+{
+  if (index >= 0 && index < fNParticleType)
+  {
+    return fParticleType[index];
+  }
+  else
+  {
+    return nullptr;
+  }
+}
+
 // Adds a new particle type to the static array if within capacity
 void Particle::AddParticleType(const std::string &name, double mass, int charge, double width)
 {
