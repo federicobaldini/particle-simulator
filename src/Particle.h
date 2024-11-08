@@ -28,6 +28,9 @@ public:
   // Returns particle type index
   int GetParticleTypeIndex() const;
 
+  // Statuic method for get the particle type by index
+  static const ParticleType *GetParticleType(int index);
+
   // Getters for momentum components
   double GetPulseX() const { return fPx; }
   double GetPulseY() const { return fPy; }
