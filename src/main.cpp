@@ -66,21 +66,39 @@ int main()
 
   hInvariantMass->GetXaxis()->SetTitle("Invariant Mass (GeV/c^{2})");
   hInvariantMass->GetYaxis()->SetTitle("Counts");
+  hInvariantMass->SetMaximum(hInvariantMass->GetMaximum() * 1.2);
+  hInvariantMass->SetLineColor(kBlue);
+  hInvariantMass->SetLineWidth(2);
 
   hInvMassOppositeCharge->GetXaxis()->SetTitle("Invariant Mass (GeV/c^{2})");
   hInvMassOppositeCharge->GetYaxis()->SetTitle("Counts");
+  hInvMassOppositeCharge->SetMaximum(hInvMassOppositeCharge->GetMaximum() * 1.2);
+  hInvMassOppositeCharge->SetLineColor(kRed);
+  hInvMassOppositeCharge->SetLineWidth(2);
 
   hInvMassSameCharge->GetXaxis()->SetTitle("Invariant Mass (GeV/c^{2})");
   hInvMassSameCharge->GetYaxis()->SetTitle("Counts");
+  hInvMassSameCharge->SetMaximum(hInvMassSameCharge->GetMaximum() * 1.2);
+  hInvMassSameCharge->SetLineColor(kGreen);
+  hInvMassSameCharge->SetLineWidth(2);
 
   hInvMassPionKaon->GetXaxis()->SetTitle("Invariant Mass (GeV/c^{2})");
   hInvMassPionKaon->GetYaxis()->SetTitle("Counts");
+  hInvMassPionKaon->SetMaximum(hInvMassPionKaon->GetMaximum() * 1.2);
+  hInvMassPionKaon->SetLineColor(kMagenta);
+  hInvMassPionKaon->SetLineWidth(2);
 
   hInvMassPionKaonSC->GetXaxis()->SetTitle("Invariant Mass (GeV/c^{2})");
   hInvMassPionKaonSC->GetYaxis()->SetTitle("Counts");
+  hInvMassPionKaonSC->SetMaximum(hInvMassPionKaonSC->GetMaximum() * 1.2);
+  hInvMassPionKaonSC->SetLineColor(kOrange);
+  hInvMassPionKaonSC->SetLineWidth(2);
 
   hInvMassDecayProducts->GetXaxis()->SetTitle("Invariant Mass (GeV/c^{2})");
   hInvMassDecayProducts->GetYaxis()->SetTitle("Counts");
+  hInvMassDecayProducts->SetMaximum(hInvMassDecayProducts->GetMaximum() * 1.2);
+  hInvMassDecayProducts->SetLineColor(kCyan);
+  hInvMassDecayProducts->SetLineWidth(2);
 
   // Enable error calculation for invariant mass histograms
   hInvariantMass->Sumw2();
@@ -198,29 +216,29 @@ int main()
         // Riempimento dell'istogramma con tutte le masse invarianti
         hInvariantMass->Fill(invMass);
 
-        const ParticleType *type_i = Particle::GetParticleType(EventParticles[i].GetParticleTypeIndex());
-        const ParticleType *type_j = Particle::GetParticleType(EventParticles[j].GetParticleTypeIndex());
+        const ParticleType *particleTypeI = Particle::GetParticleType(EventParticles[i].GetParticleTypeIndex());
+        const ParticleType *particleTypeJ = Particle::GetParticleType(EventParticles[j].GetParticleTypeIndex());
 
-        if (type_i && type_j)
+        if (particleTypeI && particleTypeJ)
         {
           // Opposite charge
-          if (type_i->GetCharge() * type_j->GetCharge() < 0)
+          if (particleTypeI->GetCharge() * particleTypeJ->GetCharge() < 0)
             hInvMassOppositeCharge->Fill(invMass);
 
           // Same charge
-          if (type_i->GetCharge() * type_j->GetCharge() > 0)
+          if (particleTypeI->GetCharge() * particleTypeJ->GetCharge() > 0)
             hInvMassSameCharge->Fill(invMass);
 
           // Pion+/Kaon- and Pion-/Kaon+
-          if ((type_i->GetName() == "Pion+" && type_j->GetName() == "Kaon-") ||
-              (type_i->GetName() == "Pion-" && type_j->GetName() == "Kaon+"))
+          if ((particleTypeI->GetName() == "Pion+" && particleTypeJ->GetName() == "Kaon-") ||
+              (particleTypeI->GetName() == "Pion-" && particleTypeJ->GetName() == "Kaon+"))
           {
             hInvMassPionKaon->Fill(invMass);
           }
 
           // Pion+/Kaon+ and Pion-/Kaon-
-          if ((type_i->GetName() == "Pion+" && type_j->GetName() == "Kaon+") ||
-              (type_i->GetName() == "Pion-" && type_j->GetName() == "Kaon-"))
+          if ((particleTypeI->GetName() == "Pion+" && particleTypeJ->GetName() == "Kaon+") ||
+              (particleTypeI->GetName() == "Pion-" && particleTypeJ->GetName() == "Kaon-"))
           {
             hInvMassPionKaonSC->Fill(invMass);
           }
@@ -228,8 +246,8 @@ int main()
           // Invariant mass of decay products from the same K*
           if (i >= 100 && j == i + 1)
           {
-            if ((type_i->GetName() == "Pion+" && type_j->GetName() == "Kaon-") ||
-                (type_i->GetName() == "Pion-" && type_j->GetName() == "Kaon+"))
+            if ((particleTypeI->GetName() == "Pion+" && particleTypeJ->GetName() == "Kaon-") ||
+                (particleTypeI->GetName() == "Pion-" && particleTypeJ->GetName() == "Kaon+"))
             {
               hInvMassDecayProducts->Fill(invMass);
             }

@@ -17,7 +17,7 @@ void save_histograms()
   }
 
   // Apri il file ROOT contenente gli istogrammi
-  TFile *file = TFile::Open("root/ParticleAnalysis.root");
+  TFile *file = TFile::Open("../data/ParticleAnalysis.root");
   if (!file || file->IsZombie())
   {
     std::cout << "Errore nell'apertura del file!" << std::endl;
@@ -39,7 +39,7 @@ void save_histograms()
       TCanvas *c = new TCanvas();
       hist->Draw();
       // Salva l'istogramma come PDF nella cartella "charts" con il nome dell'istogramma
-      TString pdfName = TString::Format("charts/%s.pdf", hist->GetName());
+      TString pdfName = TString::Format("../../charts/%s.pdf", hist->GetName());
       c->SaveAs(pdfName);
       delete c; // Elimina il canvas per liberare memoria
     }
