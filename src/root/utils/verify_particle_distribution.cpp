@@ -20,7 +20,7 @@ void verify_particle_distribution()
   const int nParticleTypes = sizeof(expectedProportions) / sizeof(expectedProportions[0]);
 
   // Apri il file ROOT e ottieni l'istogramma delle specie di particelle
-  TFile *file = TFile::Open("../data/ParticleAnalysis.root");
+  TFile *file = TFile::Open("root/data/ParticleAnalysis.root");
   if (!file || file->IsZombie())
   {
     std::cerr << "Errore nell'apertura del file ParticleAnalysis.root" << std::endl;

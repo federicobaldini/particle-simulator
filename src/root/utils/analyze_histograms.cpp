@@ -9,7 +9,7 @@
 void analyze_histograms()
 {
   // Apri il file ROOT contenente gli istogrammi
-  TFile *file = TFile::Open("../data/ParticleAnalysis.root");
+  TFile *file = TFile::Open("root/data/ParticleAnalysis.root");
   if (!file || file->IsZombie())
   {
     std::cerr << "Errore nell'apertura del file ParticleAnalysis.root" << std::endl;
@@ -51,7 +51,7 @@ void analyze_histograms()
     // Verifica visiva degli istogrammi
     TCanvas *c = new TCanvas(histNames[i], histNames[i], 800, 600);
     hist->Draw();
-    c->SaveAs(TString::Format("../../charts/%s_check.pdf", histNames[i])); // Salva l'istogramma come PDF
+    c->SaveAs(TString::Format("charts/%s_check.pdf", histNames[i])); // Salva l'istogramma come PDF
     delete c;
   }
 

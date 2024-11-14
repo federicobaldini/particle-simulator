@@ -10,7 +10,7 @@
 void check_angular_distributions()
 {
   // Apri il file ROOT contenente gli istogrammi
-  TFile *file = TFile::Open("../data/ParticleAnalysis.root");
+  TFile *file = TFile::Open("/root/data/ParticleAnalysis.root");
   if (!file || file->IsZombie())
   {
     std::cerr << "Errore nell'apertura del file ParticleAnalysis.root" << std::endl;
@@ -51,7 +51,7 @@ void check_angular_distributions()
   std::cout << "Chi2/NDF: " << chi2 << "/" << ndf << " = " << chi2 / ndf << std::endl;
   std::cout << "Probabilità del fit: " << prob << std::endl;
 
-  c1->SaveAs("../../charts/hAzimuthalAngle_fit.pdf"); // Salva il risultato del fit come PDF
+  c1->SaveAs("charts/hAzimuthalAngle_fit.pdf"); // Salva il risultato del fit come PDF
   delete c1;
 
   // Modifica il range della funzione di fit per la distribuzione polare (0 a π)
@@ -77,7 +77,7 @@ void check_angular_distributions()
   std::cout << "Chi2/NDF: " << chi2 << "/" << ndf << " = " << chi2 / ndf << std::endl;
   std::cout << "Probabilità del fit: " << prob << std::endl;
 
-  c2->SaveAs("../../charts/hPolarAngle_fit.pdf"); // Salva il risultato del fit come PDF
+  c2->SaveAs("charts/hPolarAngle_fit.pdf"); // Salva il risultato del fit come PDF
   delete c2;
 
   // Chiudi il file ROOT

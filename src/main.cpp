@@ -66,39 +66,21 @@ int main()
 
   hInvariantMass->GetXaxis()->SetTitle("Invariant Mass (GeV/c^{2})");
   hInvariantMass->GetYaxis()->SetTitle("Counts");
-  hInvariantMass->SetMaximum(hInvariantMass->GetMaximum() * 1.2);
-  hInvariantMass->SetLineColor(kBlue);
-  hInvariantMass->SetLineWidth(2);
 
   hInvMassOppositeCharge->GetXaxis()->SetTitle("Invariant Mass (GeV/c^{2})");
   hInvMassOppositeCharge->GetYaxis()->SetTitle("Counts");
-  hInvMassOppositeCharge->SetMaximum(hInvMassOppositeCharge->GetMaximum() * 1.2);
-  hInvMassOppositeCharge->SetLineColor(kRed);
-  hInvMassOppositeCharge->SetLineWidth(2);
 
   hInvMassSameCharge->GetXaxis()->SetTitle("Invariant Mass (GeV/c^{2})");
   hInvMassSameCharge->GetYaxis()->SetTitle("Counts");
-  hInvMassSameCharge->SetMaximum(hInvMassSameCharge->GetMaximum() * 1.2);
-  hInvMassSameCharge->SetLineColor(kGreen);
-  hInvMassSameCharge->SetLineWidth(2);
 
   hInvMassPionKaon->GetXaxis()->SetTitle("Invariant Mass (GeV/c^{2})");
   hInvMassPionKaon->GetYaxis()->SetTitle("Counts");
-  hInvMassPionKaon->SetMaximum(hInvMassPionKaon->GetMaximum() * 1.2);
-  hInvMassPionKaon->SetLineColor(kMagenta);
-  hInvMassPionKaon->SetLineWidth(2);
 
   hInvMassPionKaonSC->GetXaxis()->SetTitle("Invariant Mass (GeV/c^{2})");
   hInvMassPionKaonSC->GetYaxis()->SetTitle("Counts");
-  hInvMassPionKaonSC->SetMaximum(hInvMassPionKaonSC->GetMaximum() * 1.2);
-  hInvMassPionKaonSC->SetLineColor(kOrange);
-  hInvMassPionKaonSC->SetLineWidth(2);
 
   hInvMassDecayProducts->GetXaxis()->SetTitle("Invariant Mass (GeV/c^{2})");
   hInvMassDecayProducts->GetYaxis()->SetTitle("Counts");
-  hInvMassDecayProducts->SetMaximum(hInvMassDecayProducts->GetMaximum() * 1.2);
-  hInvMassDecayProducts->SetLineColor(kCyan);
-  hInvMassDecayProducts->SetLineWidth(2);
 
   // Enable error calculation for invariant mass histograms
   hInvariantMass->Sumw2();

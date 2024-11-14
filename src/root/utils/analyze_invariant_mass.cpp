@@ -10,7 +10,7 @@
 void analyze_invariant_mass()
 {
   // Apri il file ROOT contenente gli istogrammi
-  TFile *file = TFile::Open("../data/ParticleAnalysis.root");
+  TFile *file = TFile::Open("root/data/ParticleAnalysis.root");
   if (!file || file->IsZombie())
   {
     std::cerr << "Errore nell'apertura del file ParticleAnalysis.root" << std::endl;
@@ -57,18 +57,18 @@ void analyze_invariant_mass()
   // Salva gli istogrammi risultanti per verifica visiva
   TCanvas *c1 = new TCanvas("cSubtractedAll", "Invariant Mass Subtraction All", 800, 600);
   hSubtractedAll->Draw();
-  c1->SaveAs("../../charts/hSubtractedAll.pdf");
+  c1->SaveAs("charts/hSubtractedAll.pdf");
   delete c1;
 
   TCanvas *c2 = new TCanvas("cSubtractedPionKaon", "Invariant Mass Subtraction Pion-Kaon", 800, 600);
   hSubtractedPionKaon->Draw();
-  c2->SaveAs("../../charts/hSubtractedPionKaon.pdf");
+  c2->SaveAs("charts/hSubtractedPionKaon.pdf");
   delete c2;
 
   // Confronto con l'istogramma dei decadimenti della K*
   TCanvas *c3 = new TCanvas("cDecayProducts", "Invariant Mass Decay Products", 800, 600);
   hInvMassDecayProducts->Draw();
-  c3->SaveAs("../../charts/hInvMassDecayProducts.pdf");
+  c3->SaveAs("charts/hInvMassDecayProducts.pdf");
   delete c3;
 
   // Verifica se c'è un picco in corrispondenza della massa della K*
@@ -82,7 +82,7 @@ void analyze_invariant_mass()
   TCanvas *cFit1 = new TCanvas("cFitSubtractedAll", "Fit Subtracted All", 800, 600);
   hSubtractedAll->Fit("gausFit", "R"); // "R" per limitare il fit al range della funzione
   hSubtractedAll->Draw();
-  cFit1->SaveAs("../../charts/hSubtractedAll_fit.pdf");
+  cFit1->SaveAs("charts/hSubtractedAll_fit.pdf");
   delete cFit1;
 
   // Ottieni e stampa i risultati del fit
@@ -105,7 +105,7 @@ void analyze_invariant_mass()
   TCanvas *cFit2 = new TCanvas("cFitSubtractedPionKaon", "Fit Subtracted Pion-Kaon", 800, 600);
   hSubtractedPionKaon->Fit("gausFit", "R"); // Riutilizziamo la funzione gaussiana
   hSubtractedPionKaon->Draw();
-  cFit2->SaveAs("../../charts/hSubtractedPionKaon_fit.pdf");
+  cFit2->SaveAs("charts/hSubtractedPionKaon_fit.pdf");
   delete cFit2;
 
   // Ottieni e stampa i risultati del fit
@@ -128,7 +128,7 @@ void analyze_invariant_mass()
   TCanvas *cFit3 = new TCanvas("cFitDecayProducts", "Fit Decay Products", 800, 600);
   hInvMassDecayProducts->Fit("gausFit", "R"); // Fit della gaussiana sui decadimenti reali
   hInvMassDecayProducts->Draw();
-  cFit3->SaveAs("../../charts/hInvMassDecayProducts_fit.pdf");
+  cFit3->SaveAs("charts/hInvMassDecayProducts_fit.pdf");
   delete cFit3;
 
   // Ottieni e stampa i risultati del fit
