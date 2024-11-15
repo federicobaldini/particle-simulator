@@ -188,7 +188,7 @@ int Particle::Decay2Body(Particle &dau1, Particle &dau2) const
 
   double pout = sqrt((massMot * massMot - (massDau1 + massDau2) * (massDau1 + massDau2)) *
                      (massMot * massMot - (massDau1 - massDau2) * (massDau1 - massDau2))) /
-                (massMot * 0.5);
+                (massMot * 2.0);
 
   double norm = 2 * M_PI / RAND_MAX;
   double phi = rand() * norm;
