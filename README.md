@@ -92,7 +92,7 @@ Il file `main.cpp` è il cuore della simulazione. Esegue i seguenti passi:
 - **check_momentum_distribution.cpp**: Controlla la distribuzione esponenziale dell'impulso.
 - **check_angular_distributions.cpp**: Verifica la distribuzione uniforme degli angoli.
 - **analyze_invariant_mass.cpp**: Analizza gli istogrammi di massa invariante e esegue fit gaussiani.
-- **save_histograms.cpp**: Salva tutti gli istogrammi come file PDF.
+- **analyze_histograms.cpp**: Salva tutti gli istogrammi come file PDF.
 
 ## Analisi dei Risultati
 
@@ -123,5 +123,3 @@ root -l -b -q root/utils/nome_macro.cpp
 
 - **Nome**: Federico Baldini
 - **Email**: [federico.baldini7@studio.unibo.it](mailto:federico.baldini7@studio.unibo.it)
-
-Grazie per aver utilizzato il software!
