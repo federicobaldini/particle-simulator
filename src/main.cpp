@@ -46,18 +46,39 @@ int main()
   // Configurazione degli assi per gli istogrammi
   hParticleTypes->GetXaxis()->SetTitle("Particle Type Index");
   hParticleTypes->GetYaxis()->SetTitle("Counts");
+
   hAzimuthalAngle->GetXaxis()->SetTitle("Azimuthal Angle (rad)");
   hAzimuthalAngle->GetYaxis()->SetTitle("Counts");
+
   hPolarAngle->GetXaxis()->SetTitle("Polar Angle (rad)");
   hPolarAngle->GetYaxis()->SetTitle("Counts");
+
   hMomentum->GetXaxis()->SetTitle("Momentum (GeV/c)");
   hMomentum->GetYaxis()->SetTitle("Counts");
+
   hTransverseMomentum->GetXaxis()->SetTitle("Transverse Momentum (GeV/c)");
   hTransverseMomentum->GetYaxis()->SetTitle("Counts");
+
   hEnergy->GetXaxis()->SetTitle("Energy (GeV)");
   hEnergy->GetYaxis()->SetTitle("Counts");
+
   hInvariantMass->GetXaxis()->SetTitle("Invariant Mass (GeV/c^{2})");
   hInvariantMass->GetYaxis()->SetTitle("Counts");
+
+  hInvMassOppositeCharge->GetXaxis()->SetTitle("Invariant Mass (GeV/c^{2})");
+  hInvMassOppositeCharge->GetYaxis()->SetTitle("Counts");
+
+  hInvMassSameCharge->GetXaxis()->SetTitle("Invariant Mass (GeV/c^{2})");
+  hInvMassSameCharge->GetYaxis()->SetTitle("Counts");
+
+  hInvMassPionKaon->GetXaxis()->SetTitle("Invariant Mass (GeV/c^{2})");
+  hInvMassPionKaon->GetYaxis()->SetTitle("Counts");
+
+  hInvMassPionKaonSC->GetXaxis()->SetTitle("Invariant Mass (GeV/c^{2})");
+  hInvMassPionKaonSC->GetYaxis()->SetTitle("Counts");
+
+  hInvMassDecayProducts->GetXaxis()->SetTitle("Invariant Mass (GeV/c^{2})");
+  hInvMassDecayProducts->GetYaxis()->SetTitle("Counts");
 
   // Abilitazione della somma dei pesi al quadrato per gli istogrammi di massa invariante
   hInvariantMass->Sumw2();
@@ -140,7 +161,7 @@ int main()
         }
 
         // Passa alla particella successiva poiché la risonanza è già decaduta.
-        continue;
+        // continue;
       }
 
       // Imposta la quantità di moto della particella generata.
