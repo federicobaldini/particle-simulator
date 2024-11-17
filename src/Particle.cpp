@@ -5,13 +5,18 @@
 #include <cmath>
 #include <cstdlib>
 
+// Inizializzazione dell'array statico dei tipi di particelle
 ParticleType *Particle::fParticleType[Particle::fMaxNumParticleType] = {nullptr};
+
+// Inizializzazione del numero di tipi di particelle registrati
 int Particle::fNParticleType = 0;
 
-// Default constructor initializing momentum components and index
+// Costruttore di default: inizializza le componenti della quantità di moto a 0 e l'indice a -1
 Particle::Particle() : fPx(0), fPy(0), fPz(0), fIndex(-1) {}
 
-// Constructor that sets particle type and initial momentum components
+// Costruttore parametrizzato: imposta il tipo di particella e le componenti iniziali della quantità di moto
+// name: nome del tipo di particella
+// px, py, pz: componenti della quantità di moto
 Particle::Particle(const std::string &name, double px, double py, double pz)
     : fPx(px), fPy(py), fPz(pz)
 {
@@ -22,7 +27,9 @@ Particle::Particle(const std::string &name, double px, double py, double pz)
   }
 }
 
-// Searches for particle type by name; returns index or -1 if not found
+// Metodo statico che cerca un tipo di particella per nome e restituisce il suo indice
+// name: nome del tipo di particella
+// return: indice del tipo di particella o -1 se non trovato
 int Particle::FindParticleType(const std::string &name)
 {
   for (int i = 0; i < fNParticleType; ++i)
@@ -35,12 +42,15 @@ int Particle::FindParticleType(const std::string &name)
   return -1;
 }
 
-// Returns the index of the particle type
+// Restituisce l'indice del tipo di particella associato
 int Particle::GetParticleTypeIndex() const
 {
   return fIndex;
 }
 
+// Metodo statico che restituisce un tipo di particella dato il suo indice
+// index: indice del tipo di particella
+// return: puntatore al tipo di particella o nullptr se l'indice non è valido
 const ParticleType *Particle::GetParticleType(int index)
 {
   if (index >= 0 && index < fNParticleType)
@@ -53,7 +63,11 @@ const ParticleType *Particle::GetParticleType(int index)
   }
 }
 
-// Adds a new particle type to the static array if within capacity
+// Aggiunge un nuovo tipo di particella all'array statico, se c'è spazio disponibile
+// name: nome del tipo di particella
+// mass: massa della particella
+// charge: carica elettrica della particella
+// width: larghezza della risonanza (opzionale)
 void Particle::AddParticleType(const std::string &name, double mass, int charge, double width)
 {
   if (fNParticleType >= fMaxNumParticleType)
@@ -79,7 +93,8 @@ void Particle::AddParticleType(const std::string &name, double mass, int charge,
   ++fNParticleType;
 }
 
-// Sets particle type index by name, or prints an error if not found
+// Imposta l'indice del tipo di particella usando il nome
+// name: nome del tipo di particella
 void Particle::SetParticleTypeIndex(const std::string &name)
 {
   fIndex = FindParticleType(name);
@@ -89,7 +104,8 @@ void Particle::SetParticleTypeIndex(const std::string &name)
   }
 }
 
-// Sets particle type index directly, with bounds checking
+// Imposta l'indice del tipo di particella direttamente
+// index: indice del tipo di particella
 void Particle::SetParticleTypeIndex(int index)
 {
   if (index >= 0 && index < fNParticleType)
@@ -102,7 +118,7 @@ void Particle::SetParticleTypeIndex(int index)
   }
 }
 
-// Prints particle type information and momentum components
+// Stampa le informazioni sul tipo di particella e sulle componenti della quantità di moto
 void Particle::Print() const
 {
   if (fIndex != -1 && fIndex < fNParticleType)
@@ -112,7 +128,8 @@ void Particle::Print() const
   std::cout << "Px: " << fPx << ", Py: " << fPy << ", Pz: " << fPz << std::endl;
 }
 
-// Sets the momentum components
+// Imposta le componenti della quantità di moto
+// px, py, pz: nuove componenti della quantità di moto
 void Particle::SetPulse(double px, double py, double pz)
 {
   fPx = px;
@@ -120,13 +137,15 @@ void Particle::SetPulse(double px, double py, double pz)
   fPz = pz;
 }
 
-// Returns the particle mass or zero if type index is invalid
+// Restituisce la massa della particella in base al suo tipo
+// return: massa della particella o 0 se l'indice non è valido
 double Particle::GetMass() const
 {
   return (fIndex != -1) ? fParticleType[fIndex]->GetMass() : 0;
 }
 
-// Computes the total energy based on mass and momentum
+// Calcola l'energia totale della particella usando la relazione relativistica
+// return: energia totale della particella
 double Particle::GetEnergy() const
 {
   double mass = GetMass();
@@ -134,7 +153,9 @@ double Particle::GetEnergy() const
   return std::sqrt(mass * mass + p2);
 }
 
-// Calculates invariant mass with another particle
+// Calcola la massa invariante con un'altra particella
+// other: altra particella
+// return: massa invariante
 double Particle::InvariantMass(const Particle &other) const
 {
   double e1 = GetEnergy();
@@ -146,7 +167,9 @@ double Particle::InvariantMass(const Particle &other) const
   return std::sqrt((e1 + e2) * (e1 + e2) - p2_total);
 }
 
-// Simulates decay into two daughter particles with momentum conservation
+// Simula il decadimento in due particelle figlie conservando la quantità di moto
+// dau1, dau2: particelle figlie risultanti dal decadimento
+// return: stato del decadimento (0: successo, 1: errore di massa zero, 2: massa insufficiente)
 int Particle::Decay2Body(Particle &dau1, Particle &dau2) const
 {
   if (GetMass() == 0.0)
@@ -159,7 +182,7 @@ int Particle::Decay2Body(Particle &dau1, Particle &dau2) const
   double massDau1 = dau1.GetMass();
   double massDau2 = dau2.GetMass();
 
-  // Adjusts mass with a width effect if particle is a ResonanceType
+  // Effetto di larghezza per particelle di tipo ResonanceType
   if (fIndex > -1)
   {
     ResonanceType *resonance = dynamic_cast<ResonanceType *>(fParticleType[fIndex]);
@@ -194,7 +217,7 @@ int Particle::Decay2Body(Particle &dau1, Particle &dau2) const
   double phi = rand() * norm;
   double theta = rand() * norm * 0.5 - M_PI / 2.;
 
-  // Assign momentum to decay products in opposite directions
+  // Assegna la quantità di moto ai prodotti del decadimento in direzioni opposte
   dau1.SetPulse(pout * sin(theta) * cos(phi), pout * sin(theta) * sin(phi), pout * cos(theta));
   dau2.SetPulse(-pout * sin(theta) * cos(phi), -pout * sin(theta) * sin(phi), -pout * cos(theta));
 
@@ -203,14 +226,15 @@ int Particle::Decay2Body(Particle &dau1, Particle &dau2) const
   double by = fPy / energy;
   double bz = fPz / energy;
 
-  // Apply relativistic boost to daughters
+  // Applica un boost relativistico ai decadimenti
   dau1.Boost(bx, by, bz);
   dau2.Boost(bx, by, bz);
 
   return 0;
 }
 
-// Boosts the particle's momentum based on given velocity components
+// Applica un boost relativistico alla quantità di moto della particella
+// bx, by, bz: componenti della velocità relativistica
 void Particle::Boost(double bx, double by, double bz)
 {
   double energy = GetEnergy();
