@@ -245,7 +245,7 @@ int main()
   }
 
   // Salvataggio degli istogrammi su file ROOT per analisi
-  TFile file("ParticleAnalysis.root", "RECREATE");
+  TFile file("root/data/ParticleAnalysis.root", "RECREATE");
   hParticleTypes->Write();
   hAzimuthalAngle->Write();
   hPolarAngle->Write();
