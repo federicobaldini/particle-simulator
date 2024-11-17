@@ -3,19 +3,28 @@
 
 #include "ParticleType.h"
 
+// La classe ResonanceType rappresenta un tipo di particella che include
+// una larghezza di risonanza, estendendo le proprietà della classe base ParticleType.
+
 class ResonanceType : public ParticleType
 {
 private:
-  const double fWidth; // Resonance width
+  const double fWidth; // Larghezza della risonanza (caratteristica esclusiva di questo tipo di particella)
 
 public:
-  // Constructor initializing name, mass, charge, and width
+  // Costruttore che inizializza il nome, la massa, la carica e la larghezza della risonanza.
+  // name: nome della particella
+  // mass: massa della particella
+  // charge: carica elettrica della particella
+  // width: larghezza della risonanza
   ResonanceType(const std::string &name, double mass, int charge, double width);
 
-  // Returns the resonance width
+  // Metodo che restituisce la larghezza di risonanza.
+  // return: larghezza di risonanza (fWidth)
   double GetWidth() const override;
 
-  // Prints particle properties, including width
+  // Metodo per stampare le proprietà della particella, inclusa la larghezza di risonanza.
+  // Include il nome, la massa, la carica e la larghezza della risonanza.
   void Print() const override;
 };
 
