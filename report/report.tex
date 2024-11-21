@@ -64,19 +64,20 @@ L'uso di questa struttura permette inoltre di mantenere il codice flessibile e s
 Durante la simulazione sono stati generati 100.000 eventi di collisione, per un totale di 10.199.840 particelle. I tipi di particelle generate, insieme alle loro proporzioni teoriche e osservate, sono:
 
 \begin{itemize}
-    \item \textbf{Pion+} e \textbf{Pion-}: Ognuno con una probabilità teorica del 40\%. La simulazione ha prodotto rispettivamente il 39,7042\% e il 39,7188\% del totale, con una differenza minima rispetto al valore atteso.
+    \item \textbf{Pion+} e \textbf{Pion-}: Ognuna con una probabilità teorica del 40\%. La simulazione ha prodotto rispettivamente il 39,7042\% e il 39,7188\% del totale, con una differenza minima rispetto al valore atteso.
     \item \textbf{Kaon+} e \textbf{Kaon-}: Con una probabilità teorica del 5\%, hanno registrato proporzioni osservate del 5,3869\% e 5,3846\%.
     \item \textbf{Proton+} e \textbf{Proton-}: Con una probabilità teorica del 4,5\%, le proporzioni osservate sono state rispettivamente del 4,4172\% e 4,4087\%.
     \item \textbf{K*}: Risonanza generata con una probabilità teorica dell'1\%, corrispondente allo 0,9796\% delle particelle totali.
 \end{itemize}
 
 Le proprietà cinematiche delle particelle, come quantità di moto, angoli azimutali (\( \phi \)) e polari (\( \theta \)), sono state generate casualmente. In particolare:
+
 \begin{itemize}
     \item Gli angoli azimutali e polari seguono distribuzioni uniformi rispettivamente nell'intervallo \([0, 2\pi]\) e \([0, \pi]\). Le verifiche effettuate hanno mostrato un'eccellente accordo con le distribuzioni teoriche attese.
     \item La quantità di moto segue una distribuzione esponenziale con valore medio di 1 GeV/c. Il fit ha confermato una media osservata di \(0,992 \pm 0,0005\) GeV/c, leggermente inferiore al valore teorico.
 \end{itemize}
 
-Gli eventi generati sono stati analizzati in base alla loro energia totale, quantità di moto trasversale e masse invarianti. Complessivamente, sono stati registrati 515.281.596 ingressi per le masse invarianti, includendo combinazioni di tutte le coppie di particelle e specifici decadimenti del \( K^* \). Questa analisi permette di identificare picchi di risonanza e verificare la conservazione delle proprietà fisiche negli eventi simulati.
+Gli eventi di collisione generati sono stati analizzati in base alla loro energia totale, alla quantità di moto trasversale ed alle masse invarianti. Complessivamente, sono stati registrati 515.281.596 ingressi per le masse invarianti, includendo combinazioni di tutte le coppie di particelle e specifici decadimenti del \( K^* \). Questa analisi permette di identificare picchi di risonanza e verificare la conservazione delle proprietà fisiche negli eventi simulati.
 
 \clearpage
 
@@ -84,32 +85,32 @@ Gli eventi generati sono stati analizzati in base alla loro energia totale, quan
 
 In questa sezione vengono analizzati i risultati della simulazione, confrontando le distribuzioni osservate con i dati di input e verificando la congruenza delle proprietà delle particelle generate. Inoltre, viene descritto l'approccio seguito per estrarre il segnale della risonanza \( K^* \).
 
-\subsection{Distribuzione delle Particelle}
+\subsection{Distribuzione delle particelle}
 
-Le abbondanze delle diverse specie di particelle sono state confrontate con le occorrenze attese. Come mostrato nella Tabella \ref{tab:abbondanze}, le occorrenze osservate sono in buon accordo con quelle teoriche, considerando gli errori statistici associati.
+Le quantità dei diversi tipi di particelle sono state confrontate con le occorrenze attese. Come mostrato nella Tabella \ref{tab:abbondanze}, le occorrenze osservate sono in buon accordo con quelle teoriche, considerando gli errori statistici associati.
 
 \begin{table}[h!]
     \centering
     \begin{tabular}{|c|c|c|}
         \hline
-        \textbf{Specie} & \textbf{Occorrenze Osservate} & \textbf{Occorrenze Attese (\%)} \\
+        \textbf{Specie} & \textbf{Occorrenze Osservate} & \textbf{Occorrenze Attese} \\
         \hline
-        $\pi^+$ & $4\,049\,760 \pm 2\,012$ & $40$ \\
+        $\pi^+$ & $4\,049\,760 \pm 2\,012$ & $4\,000\,000$ \\
         \hline
-        $\pi^-$ & $4\,051\,260 \pm 2\,013$ & $40$ \\
+        $\pi^-$ & $4\,051\,260 \pm 2\,013$ & $4\,000\,000$ \\
         \hline
-        $K^+$ & $549\,452 \pm 741$ & $5$ \\
+        $K^+$ & $549\,452 \pm 741$ & $500\,000$ \\
         \hline
-        $K^-$ & $549\,221 \pm 741$ & $5$ \\
+        $K^-$ & $549\,221 \pm 741$ & $500\,000$ \\
         \hline
-        $p^+$ & $450\,544 \pm 671$ & $4.5$ \\
+        $p^+$ & $450\,544 \pm 671$ & $450\,000$ \\
         \hline
-        $p^-$ & $449\,680 \pm 671$ & $4.5$ \\
+        $p^-$ & $449\,680 \pm 671$ & $450\,000$ \\
         \hline
-        $K^*$ & $99\,920 \pm 316$ & $1$ \\
+        $K^*$ & $99\,920 \pm 316$ & $100\,000$ \\
         \hline
     \end{tabular}
-    \caption{Abbondanze delle particelle: confronto tra occorrenze osservate e attese.}
+    \caption{Distribuzione delle particelle: confronto tra occorrenze osservate ed attese.}
     \label{tab:abbondanze}
 \end{table}
 
@@ -130,7 +131,7 @@ Le distribuzioni degli angoli polari ($\theta$) e azimutali ($\phi$), insieme al
         Modulo dell'impulso (fit esponenziale) & $0.9924 \pm 0.0005$ & $146.115$ & $88$ & $1.660$ \\
         \hline
     \end{tabular}
-    \caption{Risultati dei fit delle distribuzioni degli angoli e del modulo dell'impulso.}
+    \caption{Risultati dei fit per le distribuzioni degli angoli e del modulo dell'impulso.}
     \label{tab:distribuzioni}
 \end{table}
 
@@ -138,7 +139,7 @@ Come evidenziato in Tabella \ref{tab:distribuzioni}, i parametri del fit per gli
 
 \subsection{Analisi della risonanza \( K^* \)}
 
-Per estrarre il segnale della risonanza \( K^* \), è stata effettuata un'analisi delle masse invarianti delle coppie di particelle. In particolare, si è proceduto sottraendo l'istogramma delle combinazioni di carica concorde da quello delle combinazioni di carica discorde, al fine di ridurre il background e isolare il picco della risonanza.
+Per estrarre il segnale della risonanza \( K^* \), è stata effettuata un'analisi delle masse invarianti delle coppie di particelle. In particolare, si è proceduto sottraendo l'istogramma delle combinazioni di carica concorde da quello delle combinazioni di carica discorde, al fine di ridurre il segnale di fondo e di isolare il picco della risonanza.
 
 I risultati dei fit gaussiani sulle diverse distribuzioni sono riportati in Tabella \ref{tab:kstar}.
 
@@ -159,7 +160,7 @@ I risultati dei fit gaussiani sulle diverse distribuzioni sono riportati in Tabe
     \label{tab:kstar}
 \end{table}
 
-Le masse ottenute sono in ottimo accordo con il valore atteso per il \( K^* \) ($\approx 0.892$ GeV/$c^2$). L'approccio seguito ha permesso di ridurre il contributo del background e di evidenziare il segnale della risonanza, confermando la validità della metodologia adottata.
+Le masse ottenute sono in ottimo accordo con il valore atteso per il \( K^* \) ($\approx 0.892$ GeV/$c^2$). L'approccio seguito ha permesso di ridurre il contributo del segnale di fondo e di evidenziare il segnale della risonanza, confermando la validità del metodo utilizzata.
 
 \clearpage
 
@@ -168,9 +169,9 @@ Le masse ottenute sono in ottimo accordo con il valore atteso per il \( K^* \) (
 Distribuzioni delle proprietà cinematiche e delle abbondanze delle particelle generate (in riferimento alla Figura \ref{fig:distribuzioni}):
 
 \begin{itemize}
-    \item \textbf{Angolo polare (\( \theta \))}: la distribuzione è uniforme, come previsto, con un fit costante sovrapposto. I parametri del fit sono riportati nella box della statistica.
-    \item \textbf{Angolo azimutale (\( \phi \))}: anche questa distribuzione segue un andamento uniforme, confermato dal fit sovrapposto.
-    \item \textbf{Modulo dell'impulso}: la distribuzione esponenziale è in accordo con i valori teorici, con i parametri del fit esponenziale (normalizzazione e media) riportati nella box.
+    \item \textbf{Angolo polare (\( \theta \))}: la distribuzione è uniforme, come previsto, con un fit costante sovrapposto. I parametri del fit sono riportati nel box delle statistiche.
+    \item \textbf{Angolo azimutale (\( \phi \))}: anche questa distribuzione segue un andamento uniforme, confermato dalla sovrapposizione del fit.
+    \item \textbf{Modulo dell'impulso}: la distribuzione esponenziale è in accordo con i valori teorici e con i parametri del fit esponenziale (normalizzazione e media) riportati nella box.
     \item \textbf{Abbondanze delle particelle}: le occorrenze osservate per ciascun tipo di particella (pioni, kaoni, protoni e \( K^* \)) sono mostrate con barre proporzionali alla frequenza relativa. I dati sono confrontati con le proporzioni teoriche.
 \end{itemize}
 
@@ -188,8 +189,8 @@ Ogni box statistica mostra i parametri principali per il fit associato a ciascun
 Analisi delle masse invarianti associate alla risonanza \( K^* \) (in riferimento alla Figura \ref{fig:kstar}):
 \begin{itemize}
     \item \textbf{Decadimenti veri di \( K^* \)}: distribuzione delle masse invarianti delle coppie generate direttamente dai decadimenti delle risonanze \( K^* \). Il fit gaussiano sovrapposto evidenzia una media intorno a \( 0.892 \, \mathrm{GeV}/c^2 \) e una larghezza coerente con la teoria.
-    \item \textbf{Differenza fra combinazioni di carica discorde e concorde (tutte le particelle)}: questa distribuzione mira a rimuovere il fondo uniforme dovuto a combinazioni casuali. Il fit gaussiano mostra un picco centrale in accordo con la massa del \( K^* \), confermando la bontà della sottrazione del fondo.
-    \item \textbf{Differenza fra combinazioni \( \pi K \) di carica discorde e concorde}: qui la selezione è ristretta a coppie \( \pi K \), migliorando il rapporto segnale-rumore e rendendo più evidente il picco della risonanza \( K^* \). I parametri del fit (media, larghezza e ampiezza) sono riportati nella box della statistica per ogni grafico.
+    \item \textbf{Differenza fra combinazioni di carica discorde e concorde (tutte le particelle)}: questa distribuzione mira a rimuovere il segnale di fondo uniforme dovuto a combinazioni casuali. Il fit gaussiano mostra un picco centrale in accordo con la massa del \( K^* \), confermando la qualità della sottrazione del segnale di fondo.
+    \item \textbf{Differenza fra combinazioni \( \pi K \) di carica discorde e concorde}: qui la selezione è ristretta a coppie \( \pi K \), migliorando il rapporto segnale-rumore e rendendo più evidente il picco della risonanza \( K^* \). I parametri del fit (media, larghezza e ampiezza) sono riportati nel box delle statistiche per ogni grafico.
 \end{itemize}
 
 \begin{figure}[h!]
