@@ -19,12 +19,12 @@ public:
   // width: larghezza della risonanza
   ResonanceType(const std::string &name, double mass, int charge, double width);
 
-  // Metodo che restituisce la larghezza di risonanza.
+  // Metodo per accedere alla larghezza di risonanza.
   // return: larghezza di risonanza (fWidth)
   double GetWidth() const override;
 
   // Metodo per stampare le proprietà della particella, inclusa la larghezza di risonanza.
-  // Include il nome, la massa, la carica e la larghezza della risonanza.
+  // Stampa nome, massa, carica e la larghezza della risonanza.
   void Print() const override;
 };
 
