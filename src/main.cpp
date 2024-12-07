@@ -10,7 +10,7 @@
 #include "TCanvas.h"
 
 // Questo programma simula eventi di collisione tra particelle, generando casualmente le loro proprietà
-// (come angoli, quantità di moto e tipi) e calcolando proprietà derivate come energia e massa invariante.
+// (come angoli, quantità di moto e tipi) e calcola proprietà derivate come energia e massa invariante.
 // Utilizza ROOT per la visualizzazione e l'analisi statistica dei risultati mediante istogrammi.
 // La simulazione include il decadimento di particelle risonanti (come K*),
 // con conservazione della quantità di moto e generazione di prodotti di decadimento.
