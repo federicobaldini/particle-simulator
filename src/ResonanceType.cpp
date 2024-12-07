@@ -1,12 +1,6 @@
 #include "ResonanceType.h"
 #include <iostream>
 
-// Costruttore che inizializza le proprietà di base della particella (nome, massa e carica)
-// e la larghezza della risonanza.
-// name: nome della particella
-// mass: massa della particella
-// charge: carica elettrica della particella
-// width: larghezza della risonanza
 ResonanceType::ResonanceType(const std::string &name, double mass, int charge, double width)
     : ParticleType(name, mass, charge), fWidth(width) {}
 
