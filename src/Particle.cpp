@@ -14,12 +14,10 @@ int Particle::fNParticleType = 0;
 // Costruttore di default: inizializza le componenti della quantità di moto a 0 e l'indice a -1
 Particle::Particle() : fPx(0), fPy(0), fPz(0), fIndex(-1) {}
 
-// Costruttore parametrizzato: imposta il tipo di particella e le componenti iniziali della quantità di moto
-// name: nome del tipo di particella
-// px, py, pz: componenti della quantità di moto
 Particle::Particle(const std::string &name, double px, double py, double pz)
     : fPx(px), fPy(py), fPz(pz)
 {
+  // La particella viene creata solo se il suo tipo è stato definito
   fIndex = FindParticleType(name);
   if (fIndex == -1)
   {
@@ -27,9 +25,6 @@ Particle::Particle(const std::string &name, double px, double py, double pz)
   }
 }
 
-// Metodo statico che cerca un tipo di particella per nome e restituisce il suo indice
-// name: nome del tipo di particella
-// return: indice del tipo di particella o -1 se non trovato
 int Particle::FindParticleType(const std::string &name)
 {
   for (int i = 0; i < fNParticleType; ++i)
@@ -42,15 +37,11 @@ int Particle::FindParticleType(const std::string &name)
   return -1;
 }
 
-// Restituisce l'indice del tipo di particella associato
 int Particle::GetParticleTypeIndex() const
 {
   return fIndex;
 }
 
-// Metodo statico che restituisce un tipo di particella dato il suo indice
-// index: indice del tipo di particella
-// return: puntatore al tipo di particella o nullptr se l'indice non è valido
 const ParticleType *Particle::GetParticleType(int index)
 {
   if (index >= 0 && index < fNParticleType)
@@ -63,11 +54,6 @@ const ParticleType *Particle::GetParticleType(int index)
   }
 }
 
-// Aggiunge un nuovo tipo di particella all'array statico, se c'è spazio disponibile
-// name: nome del tipo di particella
-// mass: massa della particella
-// charge: carica elettrica della particella
-// width: larghezza della risonanza (opzionale)
 void Particle::AddParticleType(const std::string &name, double mass, int charge, double width)
 {
   if (fNParticleType >= fMaxNumParticleType)
@@ -93,8 +79,6 @@ void Particle::AddParticleType(const std::string &name, double mass, int charge,
   ++fNParticleType;
 }
 
-// Imposta l'indice del tipo di particella usando il nome
-// name: nome del tipo di particella
 void Particle::SetParticleTypeIndex(const std::string &name)
 {
   fIndex = FindParticleType(name);
@@ -104,8 +88,6 @@ void Particle::SetParticleTypeIndex(const std::string &name)
   }
 }
 
-// Imposta l'indice del tipo di particella direttamente
-// index: indice del tipo di particella
 void Particle::SetParticleTypeIndex(int index)
 {
   if (index >= 0 && index < fNParticleType)
@@ -118,7 +100,6 @@ void Particle::SetParticleTypeIndex(int index)
   }
 }
 
-// Stampa le informazioni sul tipo di particella e sulle componenti della quantità di moto
 void Particle::Print() const
 {
   if (fIndex != -1 && fIndex < fNParticleType)
@@ -128,8 +109,6 @@ void Particle::Print() const
   std::cout << "Px: " << fPx << ", Py: " << fPy << ", Pz: " << fPz << std::endl;
 }
 
-// Imposta le componenti della quantità di moto
-// px, py, pz: nuove componenti della quantità di moto
 void Particle::SetPulse(double px, double py, double pz)
 {
   fPx = px;
@@ -137,15 +116,11 @@ void Particle::SetPulse(double px, double py, double pz)
   fPz = pz;
 }
 
-// Restituisce la massa della particella in base al suo tipo
-// return: massa della particella o 0 se l'indice non è valido
 double Particle::GetMass() const
 {
   return (fIndex != -1) ? fParticleType[fIndex]->GetMass() : 0;
 }
 
-// Calcola l'energia totale della particella usando la relazione relativistica
-// return: energia totale della particella
 double Particle::GetEnergy() const
 {
   double mass = GetMass();
@@ -153,9 +128,6 @@ double Particle::GetEnergy() const
   return std::sqrt(mass * mass + p2);
 }
 
-// Calcola la massa invariante con un'altra particella
-// other: altra particella
-// return: massa invariante
 double Particle::InvariantMass(const Particle &other) const
 {
   double e1 = GetEnergy();
@@ -167,9 +139,6 @@ double Particle::InvariantMass(const Particle &other) const
   return std::sqrt((e1 + e2) * (e1 + e2) - p2_total);
 }
 
-// Simula il decadimento in due particelle figlie conservando la quantità di moto
-// dau1, dau2: particelle figlie risultanti dal decadimento
-// return: stato del decadimento (0: successo, 1: errore di massa zero, 2: massa insufficiente)
 int Particle::Decay2Body(Particle &dau1, Particle &dau2) const
 {
   if (GetMass() == 0.0)
@@ -233,8 +202,6 @@ int Particle::Decay2Body(Particle &dau1, Particle &dau2) const
   return 0;
 }
 
-// Applica un boost relativistico alla quantità di moto della particella
-// bx, by, bz: componenti della velocità relativistica
 void Particle::Boost(double bx, double by, double bz)
 {
   double energy = GetEnergy();
