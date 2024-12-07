@@ -9,7 +9,7 @@
 
 void check_angular_distributions()
 {
-  // Apre il file ROOT contenente gli istogrammi.
+  // Apro il file ROOT contenente gli istogrammi.
   TFile *file = TFile::Open("root/data/ParticleAnalysis.root");
   if (!file || file->IsZombie()) // Controlla se il file è stato aperto correttamente.
   {
@@ -17,7 +17,7 @@ void check_angular_distributions()
     return;
   }
 
-  // Ottiene gli istogrammi delle distribuzioni angolari:
+  // Ottengo gli istogrammi delle distribuzioni angolari:
   // - hAzimuthalAngle: distribuzione dell'angolo azimutale (phi, 0 a 2π).
   // - hPolarAngle: distribuzione dell'angolo polare (theta, 0 a π).
   TH1F *hAzimuthalAngle = (TH1F *)file->Get("hAzimuthalAngle");
@@ -44,7 +44,7 @@ void check_angular_distributions()
   hAzimuthalAngle->Fit("uniformFit", "Q"); // Esegue il fit in modalità silenziosa ("Q").
   hAzimuthalAngle->Draw("E");              // Disegna l'istogramma con gli errori statistici.
 
-  // Ottiene i risultati del fit per la distribuzione azimutale:
+  // Ottengo i risultati del fit per la distribuzione azimutale:
   // - Chi2: bontà del fit (minore è meglio).
   // - NDF: numero di gradi di libertà.
   // - Probabilità: probabilità che i dati siano consistenti con il modello.
@@ -59,11 +59,11 @@ void check_angular_distributions()
   std::cout << "Chi2/NDF: " << chi2 << "/" << ndf << " = " << chi2 / ndf << std::endl;
   std::cout << "Probabilità del fit: " << prob << std::endl;
 
-  // Salva il fit della distribuzione azimutale come file PDF.
+  // Salvo il fit della distribuzione azimutale come file PDF.
   c1->SaveAs("charts/check-angular-distributions/hAzimuthalAngle_fit.pdf");
   delete c1;
 
-  // Modifica il range della funzione uniforme per adattarla alla distribuzione polare (theta, 0 a π).
+  // Modifico il range della funzione uniforme per adattarla alla distribuzione polare (theta, 0 a π).
   uniformFit->SetRange(0, TMath::Pi());
   uniformFit->SetParameter(0, hPolarAngle->GetEntries() / hPolarAngle->GetNbinsX());
   uniformFit->SetLineColor(kRed); // Imposta nuovamente il colore rosso.
@@ -75,7 +75,7 @@ void check_angular_distributions()
   hPolarAngle->Fit("uniformFit", "Q"); // Fit silenzioso.
   hPolarAngle->Draw("E");              // Disegna l'istogramma con gli errori statistici.
 
-  // Ottiene i risultati del fit per la distribuzione polare.
+  // Ottiengo i risultati del fit per la distribuzione polare.
   chi2 = uniformFit->GetChisquare();
   ndf = uniformFit->GetNDF();
   prob = uniformFit->GetProb();
@@ -87,11 +87,11 @@ void check_angular_distributions()
   std::cout << "Chi2/NDF: " << chi2 << "/" << ndf << " = " << chi2 / ndf << std::endl;
   std::cout << "Probabilità del fit: " << prob << std::endl;
 
-  // Salva il fit della distribuzione polare come file PDF.
+  // Salvo il fit della distribuzione polare come file PDF.
   c2->SaveAs("charts/check-angular-distributions/hPolarAngle_fit.pdf");
   delete c2;
 
-  // Chiude il file ROOT e libera la memoria.
+  // chiudo il file ROOT e libero la memoria.
   file->Close();
   delete file;
   delete uniformFit;

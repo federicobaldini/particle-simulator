@@ -3,6 +3,7 @@
     "*.wasm": "wasm",
     "vector": "cpp",
     "ostream": "cpp",
-    "new": "cpp"
+    "new": "cpp",
+    "iostream": "cpp"
   }
 }

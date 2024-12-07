@@ -11,8 +11,8 @@
 
 void save_histograms()
 {
-  // Controlla se la cartella "charts" esiste.
-  // Se non esiste, la crea utilizzando il comando di sistema "mkdir".
+  // Controllo se la cartella "charts" esiste.
+  // Se non esiste, la creo utilizzando il comando di sistema "mkdir".
   struct stat info;
   if (stat("charts", &info) != 0)
   {
@@ -20,7 +20,7 @@ void save_histograms()
     system("mkdir -p charts"); // "-p" assicura che la cartella venga creata se non esiste
   }
 
-  // Apre il file ROOT contenente gli istogrammi.
+  // Apro il file ROOT contenente gli istogrammi.
   TFile *file = TFile::Open("root/data/ParticleAnalysis.root");
   if (!file || file->IsZombie()) // Controlla se il file è aperto correttamente o è corrotto.
   {
@@ -28,7 +28,7 @@ void save_histograms()
     return;
   }
 
-  // Itera su tutti gli oggetti salvati nel file ROOT.
+  // Itero su tutti gli oggetti salvati nel file ROOT.
   TIter next(file->GetListOfKeys());
   TKey *key;
   while ((key = (TKey *)next())) // Scorre ogni chiave (oggetto salvato) nel file.
@@ -56,7 +56,7 @@ void save_histograms()
     }
   }
 
-  // Chiude il file ROOT dopo aver processato tutti gli oggetti.
+  // Chiudo il file ROOT dopo aver processato tutti gli oggetti.
   file->Close();
 
   // Messaggio di completamento.

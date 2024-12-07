@@ -8,7 +8,7 @@
 
 void analyze_invariant_mass()
 {
-  // Apri il file ROOT contenente gli istogrammi
+  // Apro il file ROOT contenente gli istogrammi
   TFile *file = TFile::Open("root/data/ParticleAnalysis.root");
   if (!file || file->IsZombie())
   {
@@ -16,14 +16,14 @@ void analyze_invariant_mass()
     return;
   }
 
-  // Ottieni gli istogrammi necessari dal file ROOT
+  // Ottengo gli istogrammi necessari dal file ROOT
   TH1F *hInvMassOppositeCharge = (TH1F *)file->Get("hInvMassOppositeCharge");
   TH1F *hInvMassSameCharge = (TH1F *)file->Get("hInvMassSameCharge");
   TH1F *hInvMassPionKaon = (TH1F *)file->Get("hInvMassPionKaon");
   TH1F *hInvMassPionKaonSC = (TH1F *)file->Get("hInvMassPionKaonSC");
   TH1F *hInvMassDecayProducts = (TH1F *)file->Get("hInvMassDecayProducts");
 
-  // Verifica che tutti gli istogrammi siano stati correttamente caricati
+  // Verifico che tutti gli istogrammi siano stati correttamente caricati
   if (!hInvMassOppositeCharge || !hInvMassSameCharge || !hInvMassPionKaon || !hInvMassPionKaonSC || !hInvMassDecayProducts)
   {
     std::cerr << "Errore nel recupero degli istogrammi dal file!" << std::endl;
@@ -31,14 +31,14 @@ void analyze_invariant_mass()
     return;
   }
 
-  // Assicurati che la somma dei pesi al quadrato sia attivata per calcolare correttamente gli errori
+  // Mi assicuro che la somma dei pesi al quadrato sia attivata per calcolare correttamente gli errori
   hInvMassOppositeCharge->Sumw2();
   hInvMassSameCharge->Sumw2();
   hInvMassPionKaon->Sumw2();
   hInvMassPionKaonSC->Sumw2();
   hInvMassDecayProducts->Sumw2();
 
-  // **Esegui le sottrazioni richieste tra gli istogrammi**
+  // **Eseguo le sottrazioni richieste tra gli istogrammi**
 
   // 1) Sottrai l'istogramma delle masse invarianti con stessa carica da quello con carica opposta
   // Questo aiuta a eliminare il background simmetrico e mettere in evidenza possibili picchi dovuti a particelle risonanti
@@ -56,15 +56,15 @@ void analyze_invariant_mass()
   hSubtractedPionKaon->GetYaxis()->SetTitle("Counts");
   hSubtractedPionKaon->Add(hInvMassPionKaonSC, -1); // Esegue la sottrazione bin per bin
 
-  // **Salva gli istogrammi risultanti per una verifica visiva**
+  // **Salvo gli istogrammi risultanti per una verifica visiva**
 
-  // Salva l'istogramma sottratto generale (tutte le coppie di particelle)
+  // Salvo l'istogramma sottratto generale (tutte le coppie di particelle)
   TCanvas *c1 = new TCanvas("cSubtractedAll", "Invariant Mass Subtraction All", 800, 600);
   hSubtractedAll->Draw();
   c1->SaveAs("charts/analyze-invariant-mass/hSubtractedAll.pdf");
   delete c1;
 
-  // Salva l'istogramma sottratto specifico per coppie Pion-Kaon
+  // Salvo l'istogramma sottratto specifico per coppie Pion-Kaon
   TCanvas *c2 = new TCanvas("cSubtractedPionKaon", "Invariant Mass Subtraction Pion-Kaon", 800, 600);
   hSubtractedPionKaon->Draw();
   c2->SaveAs("charts/analyze-invariant-mass/hSubtractedPionKaon.pdf");
@@ -72,16 +72,16 @@ void analyze_invariant_mass()
 
   // **Confronto con l'istogramma dei decadimenti diretti della K***
 
-  // Salva l'istogramma delle masse invarianti dei prodotti di decadimento della K*
+  // Salvo l'istogramma delle masse invarianti dei prodotti di decadimento della K*
   TCanvas *c3 = new TCanvas("cDecayProducts", "Invariant Mass Decay Products", 800, 600);
   hInvMassDecayProducts->Draw();
   c3->SaveAs("charts/analyze-invariant-mass/hInvMassDecayProducts.pdf");
   delete c3;
 
   // **Verifica della presenza di un picco alla massa della K***
-  // Esegui un fit gaussiano sugli istogrammi sottratti per identificare il picco corrispondente alla K*
+  // Eseguo un fit gaussiano sugli istogrammi sottratti per identificare il picco corrispondente alla K*
 
-  // Definisci la funzione gaussiana per il fit, limitata a un range intorno alla massa attesa della K* (~0.892 GeV/c^2)
+  // Definisco la funzione gaussiana per il fit, limitata a un range intorno alla massa attesa della K* (~0.892 GeV/c^2)
   TF1 *gausFit = new TF1("gausFit", "gaus", 0.75, 1.05); // La funzione "gaus" ha tre parametri: costante, media, sigma
 
   // **Fit sull'istogramma hSubtractedAll**
@@ -93,7 +93,7 @@ void analyze_invariant_mass()
   cFit1->SaveAs("charts/analyze-invariant-mass/hSubtractedAll_fit.pdf");
   delete cFit1;
 
-  // Ottieni e stampa i risultati del fit per hSubtractedAll
+  // Ottengo e stampo i risultati del fit per hSubtractedAll
   double chi2 = gausFit->GetChisquare();
   int ndf = gausFit->GetNDF();
   double prob = gausFit->GetProb();
@@ -117,7 +117,7 @@ void analyze_invariant_mass()
   cFit2->SaveAs("charts/analyze-invariant-mass/hSubtractedPionKaon_fit.pdf");
   delete cFit2;
 
-  // Ottieni e stampa i risultati del fit per hSubtractedPionKaon
+  // Ottengo e stampo i risultati del fit per hSubtractedPionKaon
   chi2 = gausFit->GetChisquare();
   ndf = gausFit->GetNDF();
   prob = gausFit->GetProb();
@@ -141,7 +141,7 @@ void analyze_invariant_mass()
   cFit3->SaveAs("charts/analyze-invariant-mass/hInvMassDecayProducts_fit.pdf");
   delete cFit3;
 
-  // Ottieni e stampa i risultati del fit per hInvMassDecayProducts
+  // Ottengo e stampo i risultati del fit per hInvMassDecayProducts
   chi2 = gausFit->GetChisquare();
   ndf = gausFit->GetNDF();
   prob = gausFit->GetProb();
@@ -156,7 +156,7 @@ void analyze_invariant_mass()
   std::cout << "Chi2/NDF: " << chi2 << "/" << ndf << " = " << chi2 / ndf << std::endl;
   std::cout << "Probabilità del fit: " << prob << std::endl;
 
-  // **Chiudi il file ROOT e libera la memoria**
+  // **Chiudo il file ROOT e libero la memoria**
 
   file->Close();
   delete file;

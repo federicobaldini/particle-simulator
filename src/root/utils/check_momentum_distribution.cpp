@@ -9,7 +9,7 @@
 
 void check_momentum_distribution()
 {
-  // Apre il file ROOT contenente gli istogrammi.
+  // Apro il file ROOT contenente gli istogrammi.
   TFile *file = TFile::Open("root/data/ParticleAnalysis.root");
   if (!file || file->IsZombie()) // Controlla se il file è stato aperto correttamente.
   {
@@ -17,7 +17,7 @@ void check_momentum_distribution()
     return;
   }
 
-  // Ottiene l'istogramma del modulo dell'impulso.
+  // Ottengo l'istogramma del modulo dell'impulso.
   TH1F *hMomentum = (TH1F *)file->Get("hMomentum");
   if (!hMomentum) // Verifica se l'istogramma esiste.
   {
@@ -26,32 +26,32 @@ void check_momentum_distribution()
     return;
   }
 
-  // Definisce una funzione esponenziale per il fit:
+  // Definizione della funzione esponenziale per il fit:
   // - `[0]` è il fattore di normalizzazione (altezza iniziale).
   // - `[1]` rappresenta la media della distribuzione esponenziale.
   // Modifica dell'intervallo di fit per escludere la regione a basso impulso
   TF1 *expFit = new TF1("expFit", "[0]*exp(-x/[1])", 0.5, 5); // Fit da 0.5 GeV a 5 GeV
-  expFit->SetParameter(1, 1.0);                             // Imposta il valore iniziale della media (1 GeV).
-  expFit->SetLineColor(kRed);                               // Imposta il colore della curva di fit (rosso).
-  expFit->SetLineWidth(2);                                  // Imposta lo spessore della linea.
+  expFit->SetParameter(1, 1.0);                               // Imposta il valore iniziale della media (1 GeV).
+  expFit->SetLineColor(kRed);                                 // Imposta il colore della curva di fit (rosso).
+  expFit->SetLineWidth(2);                                    // Imposta lo spessore della linea.
 
-  // Crea un canvas per la visualizzazione
+  // Creo un canvas per la visualizzazione
   TCanvas *c1 = new TCanvas("cMomentum", "Fit Momentum", 800, 600);
 
-  // Disegna l'istogramma dell'impulso
+  // Disegno l'istogramma dell'impulso
   hMomentum->SetTitle("Distribuzione del Modulo dell'Impulso con Fit Esponenziale");
   hMomentum->GetXaxis()->SetTitle("Impulso (GeV/c)");
   hMomentum->GetYaxis()->SetTitle("Conteggi");
   hMomentum->Draw("E"); // Disegna l'istogramma con gli errori
 
-  // Esegue il fit dell'istogramma hMomentum con la funzione esponenziale nell'intervallo specificato
+  // Eseguo il fit dell'istogramma hMomentum con la funzione esponenziale nell'intervallo specificato
   std::cout << "Fit della distribuzione del modulo dell'impulso (hMomentum):" << std::endl;
   hMomentum->Fit("expFit", "R"); // 'R' per rispettare il range impostato nella funzione
 
-  // Disegna la funzione di fit sovrapposta
+  // Disegno la funzione di fit sovrapposta
   expFit->Draw("Same");
 
-  // Ottiene e stampa i risultati del fit:
+  // Ottengo e stampo i risultati del fit:
   double chi2 = expFit->GetChisquare();
   int ndf = expFit->GetNDF();
   double prob = expFit->GetProb();
@@ -67,7 +67,7 @@ void check_momentum_distribution()
   std::cout << "Chi2/NDF: " << chi2 << "/" << ndf << " = " << chi2 / ndf << std::endl;
   std::cout << "Probabilità del fit: " << prob << std::endl;
 
-  // Verifica se la media ottenuta è consistente con il valore atteso (1 GeV).
+  // Verifico se la media ottenuta è consistente con il valore atteso (1 GeV).
   double expectedMean = 1.0; // Valore teorico della media.
   if (std::abs(param1 - expectedMean) <= param1Error)
   {
@@ -78,10 +78,10 @@ void check_momentum_distribution()
     std::cout << "La media ottenuta NON è consistente con la media attesa (" << expectedMean << " GeV)." << std::endl;
   }
 
-  // Salva il risultato del fit come file PDF per un'analisi visiva.
+  // Salvo il risultato del fit come file PDF per un'analisi visiva.
   c1->SaveAs("charts/check-momentum-distribution/hMomentum_fit.pdf"); // Salva nella directory corrente
 
-  // Libera memoria e chiude risorse.
+  // Libero la memoria e chiudo le risorse.
   delete c1;     // Elimina il canvas creato.
   file->Close(); // Chiude il file ROOT.
   delete file;   // Libera la memoria del file.

@@ -19,10 +19,10 @@ void verify_particle_distribution()
       1.0   // K* (1% del totale)
   };
 
-  // Calcola il numero totale di tipi di particelle.
+  // Calcolo il numero totale di tipi di particelle.
   const int nParticleTypes = sizeof(expectedProportions) / sizeof(expectedProportions[0]);
 
-  // Apre il file ROOT contenente i dati della simulazione.
+  // Apro il file ROOT contenente i dati della simulazione.
   TFile *file = TFile::Open("root/data/ParticleAnalysis.root");
   if (!file || file->IsZombie()) // Controlla se il file è aperto correttamente.
   {
@@ -30,7 +30,7 @@ void verify_particle_distribution()
     return;
   }
 
-  // Ottieni l'istogramma `hParticleTypes` che contiene il conteggio delle particelle generate per ogni tipo.
+  // Ottengo l'istogramma `hParticleTypes` che contiene il conteggio delle particelle generate per ogni tipo.
   TH1F *hParticleTypes = (TH1F *)file->Get("hParticleTypes");
   if (!hParticleTypes) // Controlla se l'istogramma esiste nel file ROOT.
   {
@@ -39,7 +39,7 @@ void verify_particle_distribution()
     return;
   }
 
-  // Ottieni il numero totale di particelle generate.
+  // Ottengo il numero totale di particelle generate.
   double totalEntries = hParticleTypes->GetEntries();
   std::cout << "Numero totale di particelle generate: " << totalEntries << std::endl;
 
@@ -71,7 +71,7 @@ void verify_particle_distribution()
               << std::endl;
   }
 
-  // Chiude il file ROOT dopo aver completato l'analisi.
+  // Chiudo il file ROOT dopo aver completato l'analisi.
   file->Close();
   delete file;
 
