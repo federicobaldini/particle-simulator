@@ -8,7 +8,7 @@
 
 void analyze_histograms()
 {
-  // Apri il file ROOT contenente gli istogrammi
+  // Viene aperto il file ROOT contenente gli istogrammi
   TFile *file = TFile::Open("root/data/ParticleAnalysis.root");
   if (!file || file->IsZombie()) // Controlla se il file è stato aperto correttamente
   {
@@ -34,29 +34,29 @@ void analyze_histograms()
 
   const int nHists = sizeof(histNames) / sizeof(histNames[0]); // Numero di istogrammi da analizzare
 
-  // Cicla su ciascun istogramma per analizzarlo
+  // Ciclo su ciascun istogramma per analizzarlo
   for (int i = 0; i < nHists; ++i)
   {
-    // Ottieni l'istogramma dal file ROOT utilizzando il nome
+    // Ottengo l'istogramma dal file ROOT utilizzando il nome
     TH1F *hist = (TH1F *)file->Get(histNames[i]);
     if (!hist) // Controlla che l'istogramma sia stato trovato
     {
       std::cerr << "Istogramma " << histNames[i] << " non trovato nel file!" << std::endl;
-      continue; // Passa all'istogramma successivo se non è presente
+      continue; // Passo all'istogramma successivo se non è presente
     }
 
-    // Ottieni il numero totale di ingressi (entries) nell'istogramma
+    // Ottengo il numero totale di ingressi (entries) nell'istogramma
     int entries = hist->GetEntries();
     std::cout << "Istogramma: " << histNames[i] << " - Numero di ingressi: " << entries << std::endl;
 
-    // Verifica visiva: disegna l'istogramma e salva il risultato come file PDF
+    // Verifica visiva: l'istogramma viene disegnato e il risultato salvato come file PDF
     TCanvas *c = new TCanvas(histNames[i], histNames[i], 800, 600);  // Crea un canvas con il nome dell'istogramma
     hist->Draw();                                                    // Disegna l'istogramma sul canvas
     c->SaveAs(TString::Format("charts/analyze-histograms/%s_check.pdf", histNames[i])); // Salva il canvas come file PDF nella cartella "charts"
     delete c;                                                        // Libera la memoria associata al canvas
   }
 
-  // Chiudi il file ROOT dopo aver analizzato tutti gli istogrammi
+  // Chiudo il file ROOT dopo aver analizzato tutti gli istogrammi
   file->Close();
   delete file;
 
