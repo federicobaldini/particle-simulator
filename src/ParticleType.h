@@ -22,13 +22,15 @@ public:
   // charge: carica elettrica della particella
   ParticleType(const std::string &name, double mass, int charge);
 
-  // Metodi per accedere alle proprietà della particella:
+  // Metodo per accedere al nome della particella:
   // return: nome della particella
   const std::string &GetName() const;
 
+  // Metodo per accedere alla massa della particella:
   // return: massa della particella
   double GetMass() const;
 
+  // Metodo per accedere alla carica della particella:
   // return: carica elettrica della particella
   int GetCharge() const;
 
