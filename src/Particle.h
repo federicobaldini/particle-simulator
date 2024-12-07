@@ -11,25 +11,18 @@
 class Particle
 {
 private:
-  // Array statico per memorizzare i tipi di particelle definiti
-  static ParticleType *fParticleType[];
+  static ParticleType *fParticleType[];      // Array statico per memorizzare i tipi di particelle definiti
+  static const int fMaxNumParticleType = 10; // Numero massimo di tipi di particelle che possono essere registrati
+  static int fNParticleType;                 // Numero corrente di tipi di particelle registrati
+  int fIndex;                                // Indice che identifica il tipo di particella
+  double fPx, fPy, fPz;                      // Componenti della quantità di moto (Px, Py, Pz)
 
-  // Numero massimo di tipi di particelle che possono essere registrati
-  static const int fMaxNumParticleType = 10;
-
-  // Numero corrente di tipi di particelle registrati
-  static int fNParticleType;
-
-  // Indice che identifica il tipo di particella
-  int fIndex;
-
-  // Componenti della quantità di moto (Px, Py, Pz)
-  double fPx, fPy, fPz;
-
-  // Trova il tipo di particella dato il nome, restituendo il suo indice
+  // Metodo statico per trovare un tipo di particella dato il nome e restituendone l'indice
+  // name: nome del tipo di particella
+  // return: indice del tipo di particella o -1 se non trovato
   static int FindParticleType(const std::string &name);
 
-  // Applica un boost relativistico alla quantità di moto della particella
+  // Metodo per applicare un boost relativistico alla quantità di moto della particella
   void Boost(double bx, double by, double bz);
 
 public:
@@ -41,13 +34,13 @@ public:
   // px, py, pz: componenti della quantità di moto (di default sono 0)
   Particle(const std::string &name, double px = 0, double py = 0, double pz = 0);
 
-  // Metodo per ottenere l'indice del tipo di particella
+  // Metodo per accedere all'indice del tipo di particella
   int GetParticleTypeIndex() const;
 
-  // Metodo statico per ottenere un tipo di particella dato il suo indice
+  // Metodo statico per accedere ad un tipo di particella dato il suo indice
   static const ParticleType *GetParticleType(int index);
 
-  // Getter per le componenti della quantità di moto
+  // Metodi per accedere alle componenti della quantità di moto
   double GetPulseX() const { return fPx; } // Restituisce la componente Px
   double GetPulseY() const { return fPy; } // Restituisce la componente Py
   double GetPulseZ() const { return fPz; } // Restituisce la componente Pz
@@ -65,17 +58,18 @@ public:
   // Metodo per impostare il tipo di particella usando l'indice
   void SetParticleTypeIndex(int index);
 
+  // Metodo per stampare le proprietà della particella.
   // Stampa informazioni sul tipo di particella e sulla quantità di moto
   void Print() const;
 
-  // Imposta le componenti della quantità di moto
+  // Metodo per impostare le componenti della quantità di moto
   // px, py, pz: nuove componenti della quantità di moto
   void SetPulse(double px, double py, double pz);
 
-  // Restituisce la massa della particella in base al suo tipo
+  // Metodo per ottenere la massa della particella in base al suo tipo
   double GetMass() const;
 
-  // Calcola l'energia totale della particella usando la relazione relativistica
+  // Metodo per ottenere l'energia totale della particella usando la relazione relativistica
   double GetEnergy() const;
 
   // Calcola la massa invariante con un'altra particella
