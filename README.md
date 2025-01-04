@@ -29,8 +29,8 @@ Il progetto simula eventi di collisione generando casualmente particelle con spe
   - `ResonanceType.h` / `ResonanceType.cpp`: Estende `ParticleType` per le risonanze.
   - `Particle.h` / `Particle.cpp`: Classe che rappresenta una particella.
   - `root/`
-   - `utils/`: Contiene le macro ROOT per l'analisi.
-   - `data/`: Directory per i file ROOT generati.
+      - `utils/`: Contiene le macro ROOT per l'analisi.
+      - `data/`: Directory per i file ROOT generati.
 - `charts/`: Directory per i grafici generati dalle macro ROOT.
 - `exec/` : Directory in cui risiede l'eseguibile compilato.
 
