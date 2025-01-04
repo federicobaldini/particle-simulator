@@ -25,32 +25,22 @@ Questo progetto ha lo scopo di simulare eventi di collisione tra particelle, rip
 
 Questa simulazione include anche il decadimento di particelle risonanti, come \( K^* \), garantendo la conservazione della quantità di moto e la generazione dei relativi prodotti di decadimento. Lo scopo principale del progetto è studiare i picchi di risonanza, analizzando le masse invarianti e verificando la coerenza delle proprietà distribuite.
 
-\section{Struttura della relazione}
-
-La relazione è suddivisa nelle seguenti parti:
-
-\begin{itemize}
-    \item \textbf{Struttura del codice}: Analisi delle classi implementate ed in particolare su aspetti come ereditarietà ed astrazione, con il fine di garantire modularità e manutenibilità.
-    \item \textbf{Generazione dati}: Descrive il processo di simulazione, incluse le distribuzioni delle proprietà cinematiche, la quantità delle particelle ed il confronto tra i valori teorici e quelli osservati.
-    \item \textbf{Analisi}: Presenta l'estrazione dei risultati, tra cui le distribuzioni delle masse invarianti ed i risultati dei fit per la verifica delle distribuzioni teoriche.
-\end{itemize}
-
 \clearpage
 
 \section{Struttura del codice}
 
-Il progetto è organizzato in modo modulare per favorire la riusabilità e la leggibilità del codice. Le principali classi implementate sono:
+Il progetto è organizzato modularmente per favorire la riusabilità e la leggibilità del codice. Le principali classi implementate sono:
 
 \begin{itemize}
-    \item \textbf{ResonanceType}: Classe base che rappresenta un tipo di particella, contiene informazioni fondamentali come il nome, la massa, la carica e la larghezza di decadimento. Questa classe fornisce un'implementazione comune per tutte le particelle risonanti.
-    \item \textbf{ParticleType}: Estende la classe \texttt{ResonanceType} aggiungendo funzionalità specifiche per le particelle non risonanti. Questo approccio sfrutta l'ereditarietà per evitare la duplicazione del codice, condividendo proprietà comuni tra i diversi tipi di particelle.
-    \item \textbf{Particle}: Classe che rappresenta una singola particella fisica. Contiene attributi come quantità di moto ed energia, ed è in grado di calcolare grandezze derivate, come la massa invariante. Include anche il metodo \texttt{Decay2Body}, che simula il decadimento di particelle risonanti.
+    \item \textbf{ParticleType}: Classe base che rappresenta un tipo di particella generico. Contiene informazioni fondamentali come il nome, la massa e la carica. Questa classe fornisce un'implementazione comune per tutte le particelle generiche.
+    \item \textbf{ResonanceType}: Estende la classe \texttt{ParticleType} aggiungendo funzionalità specifiche per le particelle risonanti, come la larghezza di decadimento (resonance width). Questo approccio sfrutta l'ereditarietà per evitare la duplicazione del codice e condividere proprietà comuni tra particelle generiche e risonanti.
+    \item \textbf{Particle}: Classe che rappresenta una singola particella fisica. Contiene attributi come la quantità di moto e il tipo di particella. Fornisce metodi per calcolare proprietà derivate, come l'energia totale e la massa invariante, e include il metodo \texttt{Decay2Body} per simulare il decadimento di particelle risonanti.
 \end{itemize}
 
 Queste classi e la loro suddivisione consente di usare caratteristiche tipiche della programmazione ad oggetti, tra le quali:
 
 \begin{itemize}
-    \item \textbf{Ereditarietà}: Le proprietà comuni sono definite nella classe \texttt{ResonanceType} e riutilizzate da \texttt{ParticleType}.
+    \item \textbf{Ereditarietà}: Le proprietà comuni sono definite nella classe \texttt{ParticleType} e riutilizzate da \texttt{ResonanceType}.
     \item \textbf{Astrazione}: Le operazioni sulle particelle (ad esempio, il calcolo della massa invariante) sono incapsulate in metodi specifici della classe \texttt{Particle}, evitando duplicazioni nei calcoli.
     \item \textbf{Organizzazione modulare}: Le classi sono separate in file distinti, migliorando la manutenibilità del codice.
 \end{itemize}
@@ -74,7 +64,7 @@ Le proprietà cinematiche delle particelle, come quantità di moto, angoli azimu
 
 \begin{itemize}
     \item Gli angoli azimutali e polari seguono distribuzioni uniformi rispettivamente nell'intervallo \([0, 2\pi]\) e \([0, \pi]\). Le verifiche effettuate hanno mostrato un'eccellente accordo con le distribuzioni teoriche attese.
-    \item La quantità di moto segue una distribuzione esponenziale con valore medio di 1 GeV/c. Il fit ha confermato una media osservata di \(0,992 \pm 0,0005\) GeV/c, leggermente inferiore al valore teorico.
+    \item La quantità di moto segue una distribuzione esponenziale con valore medio di 1 GeV/c. Il fit ha confermato una media osservata di \(0,9924 \pm 0,0005\) GeV/c, leggermente inferiore al valore teorico.
 \end{itemize}
 
 Gli eventi di collisione generati sono stati analizzati in base alla loro energia totale, alla quantità di moto trasversale ed alle masse invarianti. Complessivamente, sono stati registrati 515.281.596 ingressi per le masse invarianti, includendo combinazioni di tutte le coppie di particelle e specifici decadimenti del \( K^* \). Questa analisi permette di identificare picchi di risonanza e verificare la conservazione delle proprietà fisiche negli eventi simulati.
@@ -166,36 +156,21 @@ Le masse ottenute sono in ottimo accordo con il valore atteso per il \( K^* \) (
 
 \subsection{Analisi grafica}
 
-Distribuzioni delle proprietà cinematiche e delle abbondanze delle particelle generate (in riferimento alla Figura \ref{fig:distribuzioni}):
-
-\begin{itemize}
-    \item \textbf{Angolo polare (\( \theta \))}: la distribuzione è uniforme, come previsto, con un fit costante sovrapposto. I parametri del fit sono riportati nel box delle statistiche.
-    \item \textbf{Angolo azimutale (\( \phi \))}: anche questa distribuzione segue un andamento uniforme, confermato dalla sovrapposizione del fit.
-    \item \textbf{Modulo dell'impulso}: la distribuzione esponenziale è in accordo con i valori teorici e con i parametri del fit esponenziale (normalizzazione e media) riportati nella box.
-    \item \textbf{Abbondanze delle particelle}: le occorrenze osservate per ciascun tipo di particella (pioni, kaoni, protoni e \( K^* \)) sono mostrate con barre proporzionali alla frequenza relativa. I dati sono confrontati con le proporzioni teoriche.
-\end{itemize}
-
-Ogni box statistica mostra i parametri principali per il fit associato a ciascuna distribuzione.
+Distribuzioni delle proprietà cinematiche e delle abbondanze delle particelle generate (in riferimento alla Figura \ref{fig:distribuzioni}), ogni box statistica mostra i parametri principali per il fit associato a ciascuna distribuzione.
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.9\textwidth]{distributions.pdf}
+    \includegraphics[width=0.83\textwidth]{distributions.pdf}
     \caption{}
     \label{fig:distribuzioni}
 \end{figure}
 
-\clearpage
 
 Analisi delle masse invarianti associate alla risonanza \( K^* \) (in riferimento alla Figura \ref{fig:kstar}):
-\begin{itemize}
-    \item \textbf{Decadimenti veri di \( K^* \)}: distribuzione delle masse invarianti delle coppie generate direttamente dai decadimenti delle risonanze \( K^* \). Il fit gaussiano sovrapposto evidenzia una media intorno a \( 0.892 \, \mathrm{GeV}/c^2 \) e una larghezza coerente con la teoria.
-    \item \textbf{Differenza fra combinazioni di carica discorde e concorde (tutte le particelle)}: questa distribuzione mira a rimuovere il segnale di fondo uniforme dovuto a combinazioni casuali. Il fit gaussiano mostra un picco centrale in accordo con la massa del \( K^* \), confermando la qualità della sottrazione del segnale di fondo.
-    \item \textbf{Differenza fra combinazioni \( \pi K \) di carica discorde e concorde}: qui la selezione è ristretta a coppie \( \pi K \), migliorando il rapporto segnale-rumore e rendendo più evidente il picco della risonanza \( K^* \). I parametri del fit (media, larghezza e ampiezza) sono riportati nel box delle statistiche per ogni grafico.
-\end{itemize}
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.9\textwidth]{invariant_mass_distributions.pdf}
+    \includegraphics[width=0.83\textwidth]{invariant_mass_distributions.pdf}
     \caption{}
     \label{fig:kstar}
 \end{figure}
