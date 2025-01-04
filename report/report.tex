@@ -85,19 +85,19 @@ Le quantità dei diversi tipi di particelle sono state confrontate con le occorr
         \hline
         \textbf{Specie} & \textbf{Occorrenze Osservate} & \textbf{Occorrenze Attese} \\
         \hline
-        $\pi^+$ & $4\,049\,760 \pm 2\,012$ & $4\,000\,000$ \\
+        $\pi^+$ & $4\,049\,760 \pm 2\,010$ & $4\,000\,000$ \\
         \hline
-        $\pi^-$ & $4\,051\,260 \pm 2\,013$ & $4\,000\,000$ \\
+        $\pi^-$ & $4\,051\,260 \pm 2\,010$ & $4\,000\,000$ \\
         \hline
-        $K^+$ & $549\,452 \pm 741$ & $500\,000$ \\
+        $K^+$ & $549\,450 \pm 740$ & $500\,000$ \\
         \hline
-        $K^-$ & $549\,221 \pm 741$ & $500\,000$ \\
+        $K^-$ & $549\,220 \pm 740$ & $500\,000$ \\
         \hline
-        $p^+$ & $450\,544 \pm 671$ & $450\,000$ \\
+        $p^+$ & $450\,540 \pm 670$ & $450\,000$ \\
         \hline
-        $p^-$ & $449\,680 \pm 671$ & $450\,000$ \\
+        $p^-$ & $449\,680 \pm 670$ & $450\,000$ \\
         \hline
-        $K^*$ & $99\,920 \pm 316$ & $100\,000$ \\
+        $K^*$ & $99\,920 \pm 320$ & $100\,000$ \\
         \hline
     \end{tabular}
     \caption{Distribuzione delle particelle: confronto tra occorrenze osservate ed attese.}
@@ -114,9 +114,9 @@ Le distribuzioni degli angoli polari ($\theta$) e azimutali ($\phi$), insieme al
         \hline
         \textbf{Distribuzione} & \textbf{Parametro del Fit} & $\chi^2$ & \textbf{DOF} & $\chi^2$/DOF \\
         \hline
-        Angolo polare $\theta$ (fit costante) & $99\,998.9 \pm 31.6$ & $113.261$ & $99$ & $1.144$ \\
+        Angolo polare $\theta$ (fit costante) & $99\,999 \pm 32$ & $113.261$ & $99$ & $1.144$ \\
         \hline
-        Angolo azimutale $\phi$ (fit costante) & $99\,999.2 \pm 31.6$ & $75.738$ & $99$ & $0.765$ \\
+        Angolo azimutale $\phi$ (fit costante) & $99\,999 \pm 32$ & $75.738$ & $99$ & $0.765$ \\
         \hline
         Modulo dell'impulso (fit esponenziale) & $0.9924 \pm 0.0005$ & $146.115$ & $88$ & $1.660$ \\
         \hline
@@ -139,11 +139,11 @@ I risultati dei fit gaussiani sulle diverse distribuzioni sono riportati in Tabe
         \hline
         \textbf{Distribuzione e Fit} & \textbf{Media (GeV/$c^2$)} & \textbf{Sigma (GeV/$c^2$)} & \textbf{Ampiezza} & $\chi^2$/DOF \\
         \hline
-        Massa invariante vere \( K^* \) & $0.8918 \pm 0.0016$ & $0.04987 \pm 0.00012$ & $2\,395 \pm 9$ & $1.050$ \\
+        Massa invariante vere \( K^* \) & $0.8918 \pm 0.0016$ & $0.04987 \pm 0.00012$ & $2\,395 \pm 91$ & $1.050$ \\
         \hline
-        Massa invariante da differenza carica discorde/concorde & $0.8945 \pm 0.0054$ & $0.0545 \pm 0.0054$ & $2\,270 \pm 196$ & $0.946$ \\
+        Massa invariante da differenza carica discorde/concorde & $0.8945 \pm 0.0054$ & $0.0545 \pm 0.0054$ & $2\,270 \pm 190$ & $0.946$ \\
         \hline
-        Massa invariante da differenza $\pi K$ carica discorde/concorde & $0.8939 \pm 0.0021$ & $0.0531 \pm 0.0022$ & $2\,297 \pm 80$ & $0.878$ \\
+        Massa invariante da differenza $\pi K$ carica discorde/concorde & $0.8939 \pm 0.0021$ & $0.0531 \pm 0.0022$ & $2\,297 \pm 82$ & $0.878$ \\
         \hline
     \end{tabular}
     \caption{Risultati dell'analisi della risonanza \( K^* \) tramite fit gaussiani.}
@@ -174,5 +174,15 @@ Analisi delle masse invarianti associate alla risonanza \( K^* \) (in riferiment
     \caption{}
     \label{fig:kstar}
 \end{figure}
+
+\clearpage
+
+\section{Codice sorgente e macro}
+
+L'intero codice sorgente, insieme alle macro necessarie per la generazione del codice e l'analisi dei dati, è disponibile nella repository GitHub al seguente indirizzo: 
+
+\href{https://github.com/federicobaldini/particle-simulator}{https://github.com/federicobaldini/particle-simulator}
+
+La repository include una descrizione dettagliata dell'implementazione, istruzioni per la compilazione e l'esecuzione del progetto, e script utili per la generazione e l'analisi dei dati simulati.
 
 \end{document}
