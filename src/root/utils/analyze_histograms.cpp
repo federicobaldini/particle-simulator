@@ -1,4 +1,3 @@
-// analyze_histograms.C
 // Macro per analizzare e verificare il numero di ingressi degli istogrammi salvati
 
 #include "TFile.h"
