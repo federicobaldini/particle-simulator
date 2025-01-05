@@ -31,9 +31,9 @@ void check_momentum_distribution()
   // - `[1]` rappresenta la media della distribuzione esponenziale.
   // Modifica dell'intervallo di fit per escludere la regione a basso impulso
   TF1 *expFit = new TF1("expFit", "[0]*exp(-x/[1])", 0.5, 5); // Fit da 0.5 GeV a 5 GeV
-  expFit->SetParameter(1, 1.0);                               // Imposta il valore iniziale della media (1 GeV).
-  expFit->SetLineColor(kRed);                                 // Imposta il colore della curva di fit (rosso).
-  expFit->SetLineWidth(2);                                    // Imposta lo spessore della linea.
+  expFit->SetParameter(1, 1.0);                               // Imposto il valore iniziale della media (1 GeV).
+  expFit->SetLineColor(kRed);                                 // Imposto il colore della curva di fit (rosso).
+  expFit->SetLineWidth(2);                                    // Imposto lo spessore della linea.
 
   // Creo un canvas per la visualizzazione
   TCanvas *c1 = new TCanvas("cMomentum", "Fit Momentum", 800, 600);
